@@ -20,10 +20,9 @@ const userSchema = new Schema({
     required: true,
   },
   deliveryAdress: {
-    postalCode: Number,
-    streetAdress: String,
-    city: String,
-    required: true,
+    postalCode: { type: Number, required: true },
+    streetAdress: { type: String, required: true },
+    city: { type: String, required: true },
   },
 });
 
