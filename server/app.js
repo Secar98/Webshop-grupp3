@@ -28,7 +28,7 @@ mongoose
   .catch((error) => console.log(error));
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use("/api/users", usersRouter);
 app.use("/api/products", productsRouter);
 
 module.exports = app;

@@ -28,3 +28,25 @@ const product = new ProductModel({
 });
 
 product.save();
+
+////
+
+const order = new OrdersModel({
+  user: "6164707600930933d55f9296",
+  products: [
+    {
+      product: "616476a066f9d18e67689c51",
+      amount: 20,
+    },
+  ],
+  shipping: 25,
+  totalPrice: 25,
+  deliveryAdress: {
+    postalCode: 12345,
+    streetAdress: "test",
+    city: "test",
+  },
+  status: "test",
+});
+
+order.save();
