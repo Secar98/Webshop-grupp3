@@ -7,6 +7,7 @@ require("dotenv").config();
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const productsRouter = require("./routes/products");
 
 const app = express();
 
@@ -28,5 +29,6 @@ mongoose
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
+app.use("/api/products", productsRouter);
 
 module.exports = app;
