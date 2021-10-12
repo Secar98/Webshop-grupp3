@@ -2,8 +2,12 @@ const UserModel = require("../models/UsersModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-const tokenSecret = process.env.SECRET_TOKEN;
+const secretToken = process.env.SECRET_TOKEN;
 const salt = Number(process.env.SALT);
+
+const generateToken = (user) => {
+  return jwt.sign({ data: user }, secretToken, { expiresIn: "30m" });
+}
 
 const signupUser = async (req, res, next) => {
   const { fullName, password, email, phoneNumber, deliveryAdress } = req.body;
@@ -34,4 +38,35 @@ const signupUser = async (req, res, next) => {
   }
 };
 
-module.exports = { signupUser };
+const signInUser = (req, res, next) => {
+  const { email, password } = req.body;
+
+  UserModel.findOne({ email }).exec((err, user) => {
+
+    if (user) {
+      bcrypt.compare(password, user.password, (error, match) => {
+        if (error) console.log(error);
+        else if (match) res.status(200).json({ token: generateToken(user._id) });
+        else res.status(403).json({ msg: "wrong email or password" });
+      })
+    }
+    else {
+      res.status(403).json({ msg: "wrong email or password" })
+    }
+  })
+}
+
+const getUser = async (req, res, next) => {
+  const id = req.user;
+
+  try {
+    const user = await UserModel.findById(id);
+    res.status(200).json(user);
+  }
+  catch (err) {
+    res.status(404).json({ message: err.message });
+  }
+
+}
+
+module.exports = { signupUser, signInUser, getUser };
