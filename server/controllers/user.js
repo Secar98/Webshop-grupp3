@@ -7,7 +7,7 @@ const salt = Number(process.env.SALT);
 
 const generateToken = (user) => {
   return jwt.sign({ data: user }, secretToken, { expiresIn: "30m" });
-}
+};
 
 const signupUser = async (req, res, next) => {
   const { fullName, password, email, phoneNumber, deliveryAdress } = req.body;
@@ -42,31 +42,51 @@ const signInUser = (req, res, next) => {
   const { email, password } = req.body;
 
   UserModel.findOne({ email }).exec((err, user) => {
-
     if (user) {
       bcrypt.compare(password, user.password, (error, match) => {
         if (error) console.log(error);
-        else if (match) res.status(200).json({ token: generateToken(user._id) });
+        else if (match)
+          res.status(200).json({ token: generateToken(user._id) });
         else res.status(403).json({ msg: "wrong email or password" });
-      })
+      });
+    } else {
+      res.status(403).json({ msg: "wrong email or password" });
     }
-    else {
-      res.status(403).json({ msg: "wrong email or password" })
-    }
-  })
-}
+  });
+};
 
 const getUser = async (req, res, next) => {
   const id = req.user;
-
   try {
     const user = await UserModel.findById(id);
     res.status(200).json(user);
-  }
-  catch (err) {
+  } catch (err) {
     res.status(404).json({ message: err.message });
   }
+};
 
-}
+const updateUser = (req, res, next) => {
+  const id = req.user;
+  const { fullName, email, phoneNumber, deliveryAdress } = req.body;
+  try {
+    UserModel.findOneAndUpdate(
+      id,
+      {
+        fullName,
+        email,
+        phoneNumber,
+        deliveryAdress,
+      },
+      { returnOriginal: false }
+    )
+      .then((user) => {
+        console.log(user);
+        res.status(200).json(user);
+      })
+      .catch((err) => res.status(500).json({ msg: err.message }));
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
+};
 
-module.exports = { signupUser, signInUser, getUser };
+module.exports = { signupUser, signInUser, getUser, updateUser };
