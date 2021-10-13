@@ -7,7 +7,10 @@ const Products = require("../models/ProductsModel");
 
 const getCart = async (req, res) => {
   try {
-    let storedCart = []; //hämtas från localstorage
+    let storedCart = [{
+      "id": "616476a066f9d18e67689c51",
+      "amount": 2
+    }]; //hämtas från localstorage
     
     let cart = [];
 
