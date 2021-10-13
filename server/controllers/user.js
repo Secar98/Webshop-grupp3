@@ -18,11 +18,11 @@ const signupUser = async (req, res, next) => {
     bcrypt.hash(password, salt, (error, hash) => {
       if (error) res.status(500);
       const newUser = new UserModel({
-        fullName,
+        // fullName,
         password: hash,
         email,
-        phoneNumber,
-        deliveryAddress,
+        // phoneNumber,
+        // deliveryAddress,
       });
       newUser
         .save()

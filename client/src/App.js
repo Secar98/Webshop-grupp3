@@ -1,14 +1,21 @@
 //import react from 'react'
 import {Switch, Route} from 'react-router-dom'
 import LoginPage from './Pages/LoginPage';
+import RegisterPage from './Pages/RegisterPage';
+import {UserContext} from './context/userContext';
+import {useState} from 'react';
 
 
 function App() {
+  const [newUser, setNewUser] = useState(false)
   return (
     <div>
-      <Switch>
-        <Route path="/login" component={LoginPage}/>  
-      </Switch>
+      <UserContext.Provider value={{newUser, setNewUser}}>
+        <Switch>
+          <Route path="/login" component={LoginPage}/>  
+          <Route path="/register" component={RegisterPage}/>  
+        </Switch>
+      </UserContext.Provider>
     </div>
   );
 }

@@ -1,15 +1,18 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import {useHistory} from 'react-router-dom'
 import FetchKit from '../utils/fetchKit'
+import {UserContext} from '../context/userContext';
 
 export default function LoginPage() {
     const history = useHistory();
+    const {setNewUser, newUser} = useContext(UserContext);
     const [formData, setFormData] = useState({
         email: "", 
         password:"" 
     })
 
     useEffect(()=>{
+        console.log(`reggar ny användare: ${newUser}`);
         const token = localStorage.getItem("token")
         if(token){
             history.push('/homPage')
@@ -19,7 +22,7 @@ export default function LoginPage() {
     const handleOnSubmit =  (e) =>{
         e.preventDefault()
 
-        FetchKit.postFetch(formData)
+        FetchKit.loginFetch(formData)
         .then((res) => res.json())
         .then(item =>{
             localStorage.setItem("token", item.token)
@@ -39,6 +42,7 @@ export default function LoginPage() {
                 <input name="password" onChange={handleOnChange} type="password" placeholder="password"/>
                 <input type="submit" value="login"/>
             </form>
+            {newUser ??  (<p>User created!</p>)}
         </div>
     )
 }
