@@ -18,18 +18,18 @@ export default function AllProductsPage() {
 
   return (
     <>
-      <div>
+      <div className="row">
 
         {!productsData && <h1>Loading...</h1>}
 
-        {productsData && <div>{productsData.map((product, index) => {
+        {productsData && productsData.map((product, index) => {
           return (
-            <div>
+            <div className="col-md-4">
               <ProductListItem key={index} product={product}/>
             </div>
             
           )
-        })}</div>}
+        })}
       </div>
     </>
   )
