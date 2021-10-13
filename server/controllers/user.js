@@ -45,8 +45,9 @@ const signInUser = (req, res, next) => {
     if (user) {
       bcrypt.compare(password, user.password, (error, match) => {
         if (error) console.log(error);
-        else if (match)
-          res.status(200).json({ token: generateToken(user._id) });
+        else if (match){
+          console.log("SUCCESS")
+          res.status(200).json({ token: generateToken(user._id) });}
         else res.status(403).json({ msg: "wrong email or password" });
       });
     } else {
