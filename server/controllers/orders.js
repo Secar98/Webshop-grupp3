@@ -19,8 +19,17 @@ const getDetailOrder = async (req, res) => {
     }
 };
 
+const addOrder = async (req, res) => {
+    const newOrder = await new Orders (req.body);
+    newOrder.save()
+    .then((order) => {
+        res.status(201).json(order);
+    } )
+}
+
 
 module.exports = {
     getAllOrders,
     getDetailOrder,
+    addOrder,
 };
