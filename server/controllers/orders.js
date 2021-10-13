@@ -19,18 +19,8 @@ const getDetailOrder = async (req, res) => {
     }
 };
 
-const addOrder = async (req, res) => {
-    const id = req.params.id;
-    try {
-        const order = await Orders.findById(id);
-        res.status(200).json(order);
-    } catch (err) {
-        res.status(404).json({ massage: err.message });
-    }
-};
-
 
 module.exports = {
     getAllOrders,
-    getDetailOrder
+    getDetailOrder,
 };
