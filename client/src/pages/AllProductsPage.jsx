@@ -1,26 +1,36 @@
 import React, {useState, useEffect} from 'react';
+import ProductListItem from '../components/ProductListItem';
 
 export default function AllProductsPage() {
 
-  const [productsData, setProductsData] = useState([]);
+  const [productsData, setProductsData] = useState(null);
 
   function fetchData() {
     const url = 'http://localhost:3000/api/products/';
     fetch(url)
       .then(res => res.json())
-      .then(data => console.log(data))
+      .then(data => setProductsData(data))
   }
-  //fetch function
 
   useEffect( () => {
     fetchData()
   }, [])
 
-  //useEffect som använder fetch och uppdaterar prductsData
-
   return (
     <>
-      <p>This is a page</p>
+      <div>
+
+        {!productsData && <h1>Loading...</h1>}
+
+        {productsData && <div>{productsData.map((product, index) => {
+          return (
+            <div>
+              <ProductListItem key={index} product={product}/>
+            </div>
+            
+          )
+        })}</div>}
+      </div>
     </>
   )
 }
