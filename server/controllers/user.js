@@ -10,7 +10,7 @@ const generateToken = (user) => {
 };
 
 const signupUser = async (req, res, next) => {
-  const { fullName, password, email, phoneNumber, deliveryAdress } = req.body;
+  const { fullName, password, email, phoneNumber, deliveryAddress } = req.body;
 
   const user = await UserModel.exists({ email });
 
@@ -22,7 +22,7 @@ const signupUser = async (req, res, next) => {
         password: hash,
         email,
         phoneNumber,
-        deliveryAdress,
+        deliveryAddress,
       });
       newUser
         .save()
@@ -67,7 +67,7 @@ const getUser = async (req, res, next) => {
 
 const updateUser = (req, res, next) => {
   const id = req.user;
-  const { fullName, email, phoneNumber, deliveryAdress } = req.body;
+  const { fullName, email, phoneNumber, deliveryAddress } = req.body;
   try {
     UserModel.findOneAndUpdate(
       id,
@@ -75,7 +75,7 @@ const updateUser = (req, res, next) => {
         fullName,
         email,
         phoneNumber,
-        deliveryAdress,
+        deliveryAddress,
       },
       { returnOriginal: false }
     )

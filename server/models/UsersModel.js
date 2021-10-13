@@ -19,9 +19,9 @@ const userSchema = new Schema({
     type: Number,
     required: true,
   },
-  deliveryAdress: {
+  deliveryAddress: {
     postalCode: { type: Number, required: true },
-    streetAdress: { type: String, required: true },
+    streetAddress: { type: String, required: true },
     city: { type: String, required: true },
   },
 });

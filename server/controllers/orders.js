@@ -20,11 +20,15 @@ const getDetailOrder = async (req, res) => {
 };
 
 const addOrder = async (req, res) => {
+
     const newOrder = await new Orders (req.body);
     newOrder.save()
     .then((order) => {
         res.status(201).json(order);
-    } )
+    }).catch((err) => {
+        res.status(400).json({ msg: err.message });
+      });
+
 }
 
 
