@@ -7,7 +7,7 @@ import {useState} from 'react';
 
 
 function App() {
-  const [newUser, setNewUser] = useState(false)
+  const [newUser, setNewUser] = useState(Boolean)
   return (
     <div>
       <UserContext.Provider value={{newUser, setNewUser}}>
