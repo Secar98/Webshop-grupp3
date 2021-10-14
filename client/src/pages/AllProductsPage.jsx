@@ -31,23 +31,16 @@ export default function AllProductsPage() {
   }
   
 
-  /*search
-  check if searched input exists. (filter data .....)
-  if yes, render that product
-  if not, render all products (+maybe and error/warning if searched product is not found)*/
+  /*search function, if a search field exists, filter by search field value and save to result. 
+  Result is rendered. If search field doesnt exist, render nothing*/
   const result = searchField && 
    
     filteredData.filter((product) => {
-      console.log(`product.title is ${product.title}, searchField is ${searchField}`)
       return (
         product.title === searchField
-        
       )
     }
     )
-
-  console.log(result)
-    //render data somewhere
 
   const handleChange = e => {
     setSearchField(e.target.value); 
@@ -65,6 +58,8 @@ export default function AllProductsPage() {
           <input type="text" onChange={handleChange} value={searchField} placeholder="search"/>
           <h2 onClick={()=>getProductsByCategory("women")}>women</h2>
           <h2 onClick={()=>getProductsByCategory("men")}>men</h2>
+          {/* if search result exists, map through array and render it. If no search result, render 
+          full data or filtered data (depending upon filter by category) */}
           { result ? 
             <p>{result.map((product, index)=>{
               return (
@@ -72,8 +67,9 @@ export default function AllProductsPage() {
                   <ProductListItem key={index} product={product}/>
                 </div>
               )
-            })}</p> :
-            <>
+            })}
+            </p> 
+            :
               <div className="row">{filteredData.map((product, index) => {
                 
                 return (
@@ -85,7 +81,6 @@ export default function AllProductsPage() {
                 )
               })}
               </div>
-            </>
           }
         </>
       }
