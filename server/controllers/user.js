@@ -10,7 +10,7 @@ const generateToken = (user) => {
 };
 
 const signupUser = async (req, res, next) => {
-  const { fullName, password, email, phoneNumber, deliveryAdress } = req.body;
+  const { fullName, password, email, phoneNumber, deliveryAddress } = req.body;
 
   const user = await UserModel.exists({ email });
 
@@ -18,11 +18,11 @@ const signupUser = async (req, res, next) => {
     bcrypt.hash(password, salt, (error, hash) => {
       if (error) res.status(500);
       const newUser = new UserModel({
-        fullName,
+        // fullName,
         password: hash,
         email,
-        phoneNumber,
-        deliveryAdress,
+        // phoneNumber,
+        // deliveryAddress,
       });
       newUser
         .save()
@@ -67,7 +67,7 @@ const getUser = async (req, res, next) => {
 
 const updateUser = (req, res, next) => {
   const id = req.user;
-  const { fullName, email, phoneNumber, deliveryAdress } = req.body;
+  const { fullName, email, phoneNumber, deliveryAddress } = req.body;
   try {
     UserModel.findOneAndUpdate(
       id,
@@ -75,7 +75,7 @@ const updateUser = (req, res, next) => {
         fullName,
         email,
         phoneNumber,
-        deliveryAdress,
+        deliveryAddress,
       },
       { returnOriginal: false }
     )

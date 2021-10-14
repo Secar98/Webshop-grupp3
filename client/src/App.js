@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+//import react from 'react'
+import {Switch, Route} from 'react-router-dom'
+import LoginPage from './Pages/LoginPage';
+import RegisterPage from './Pages/RegisterPage';
+import {UserContext} from './context/userContext';
+import {useState} from 'react';
+
 
 function App() {
+  const [newUser, setNewUser] = useState(Boolean)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <UserContext.Provider value={{newUser, setNewUser}}>
+        <Switch>
+          <Route path="/login" component={LoginPage}/>  
+          <Route path="/register" component={RegisterPage}/>  
+        </Switch>
+      </UserContext.Provider>
     </div>
   );
 }
