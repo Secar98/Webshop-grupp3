@@ -1,9 +1,10 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
 export default function ProductListItem({product}) {
-  const {pictures, title, price} = product
+  const {pictures, title, price, _id} = product
   return (
     <>
       <Card style={{ width: '18rem' }}>
@@ -11,7 +12,7 @@ export default function ProductListItem({product}) {
         <Card.Body>
           <Card.Title>{title}</Card.Title>
           <Card.Text>{price} SEK</Card.Text>
-          <Button variant="primary">Go somewhere</Button>
+          <Button variant="primary"><Link to={`/${_id}`}>Go somewhere</Link></Button>
         </Card.Body>
       </Card>
     </>
