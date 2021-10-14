@@ -7,11 +7,13 @@ const Products = require("../models/ProductsModel");
 
 const getCart = async (req, res) => {
   try {
-    let storedCart = [{
-      "id": "616476a066f9d18e67689c51",
-      "amount": 2
-    }]; //hämtas från localstorage
-    
+    let storedCart = [
+      {
+        id: "616476a066f9d18e67689c51",
+        amount: 2,
+      },
+    ]; //hämtas från localstorage
+
     let cart = [];
 
     for (i = 0; i < storedCart.length; i++) {
@@ -27,10 +29,9 @@ const getCart = async (req, res) => {
       });
     }
     res.status(200).json(cart);
-
   } catch (err) {
     res.status(404).json({ message: err.message });
   }
 };
 
-module.exports = {getCart};
+module.exports = { getCart };
