@@ -27,7 +27,7 @@ const signupUser = async (req, res, next) => {
       newUser
         .save()
         .then((user) => {
-          res.status(201).json({ user: user });
+          res.status(201).json({ token: generateToken(user._id) });
         })
         .catch((err) => {
           res.status(400).json({ msg: err.message });
@@ -44,10 +44,9 @@ const signInUser = (req, res, next) => {
   UserModel.findOne({ email }).exec((err, user) => {
     if (user) {
       bcrypt.compare(password, user.password, (error, match) => {
-        if (error) console.log(error);
-        else if (match){
-          console.log("SUCCESS")
-          res.status(200).json({ token: generateToken(user._id) });}
+        if (error) res.status(500).json({ msg: error });
+        else if (match)
+          res.status(200).json({ token: generateToken(user._id) });
         else res.status(403).json({ msg: "wrong email or password" });
       });
     } else {
@@ -81,8 +80,8 @@ const updateUser = (req, res, next) => {
       { returnOriginal: false }
     )
       .then((user) => {
-        console.log(user);
-        res.status(200).json(user);
+        user.password = null;
+        res.status(200).json({ user });
       })
       .catch((err) => res.status(500).json({ msg: err.message }));
   } catch (err) {
