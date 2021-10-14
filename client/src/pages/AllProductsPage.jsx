@@ -35,8 +35,8 @@ export default function AllProductsPage() {
   check if searched input exists. (filter data .....)
   if yes, render that product
   if not, render all products (+maybe and error/warning if searched product is not found)*/
-  const result = !searchField ? 
-    filteredData : 
+  const result = searchField && 
+   
     filteredData.filter((product) => {
       console.log(`product.title is ${product.title}, searchField is ${searchField}`)
       return (
@@ -54,7 +54,6 @@ export default function AllProductsPage() {
   };
 
   return (
-    <>
       
       <div>
 
@@ -66,19 +65,30 @@ export default function AllProductsPage() {
           <input type="text" onChange={handleChange} value={searchField} placeholder="search"/>
           <h2 onClick={()=>getProductsByCategory("women")}>women</h2>
           <h2 onClick={()=>getProductsByCategory("men")}>men</h2>
-          <div className="row">{filteredData.map((product, index) => {
-            return (
-              <>
+          { result ? 
+            <p>{result.map((product, index)=>{
+              return (
                 <div className="col-md-4">
                   <ProductListItem key={index} product={product}/>
                 </div>
-              </>
-            )
-          })}
-          </div>
+              )
+            })}</p> :
+            <>
+              <div className="row">{filteredData.map((product, index) => {
+                
+                return (
+                  <>
+                    <div className="col-md-4">
+                      <ProductListItem key={index} product={product}/>
+                    </div>
+                  </>
+                )
+              })}
+              </div>
+            </>
+          }
         </>
-        }
+      }
       </div>
-    </>
   )
 }
