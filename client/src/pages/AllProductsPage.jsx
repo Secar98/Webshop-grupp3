@@ -5,6 +5,7 @@ export default function AllProductsPage() {
 
   const [productsData, setProductsData] = useState(null);
   const [filteredData, setFilteredData] = useState(null);
+  const [searchField, setSearchField] = useState("");
 
   function fetchData() {
     const url = 'http://localhost:3000/api/products/';
@@ -27,8 +28,30 @@ export default function AllProductsPage() {
       return product.category.includes(category)
     })
     setFilteredData(productsInCategory);
-
   }
+  
+
+  /*search
+  check if searched input exists. (filter data .....)
+  if yes, render that product
+  if not, render all products (+maybe and error/warning if searched product is not found)*/
+  const result = !searchField ? 
+    filteredData : 
+    filteredData.filter((product) => {
+      console.log(`product.title is ${product.title}, searchField is ${searchField}`)
+      return (
+        product.title === searchField
+        
+      )
+    }
+    )
+
+  console.log(result)
+    //render data somewhere
+
+  const handleChange = e => {
+    setSearchField(e.target.value); 
+  };
 
   return (
     <>
@@ -40,6 +63,7 @@ export default function AllProductsPage() {
         {filteredData && 
         
         <>
+          <input type="text" onChange={handleChange} value={searchField} placeholder="search"/>
           <h2 onClick={()=>getProductsByCategory("women")}>women</h2>
           <h2 onClick={()=>getProductsByCategory("men")}>men</h2>
           <div className="row">{filteredData.map((product, index) => {
