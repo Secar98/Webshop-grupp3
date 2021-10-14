@@ -10,7 +10,7 @@ const generateToken = (user) => {
 };
 
 const signupUser = async (req, res, next) => {
-  const { fullName, password, email, phoneNumber, deliveryAdress } = req.body;
+  const { fullName, password, email, phoneNumber, deliveryAddress } = req.body;
 
   const user = await UserModel.exists({ email });
 
@@ -18,16 +18,16 @@ const signupUser = async (req, res, next) => {
     bcrypt.hash(password, salt, (error, hash) => {
       if (error) res.status(500);
       const newUser = new UserModel({
-        fullName,
+        // fullName,
         password: hash,
         email,
-        phoneNumber,
-        deliveryAdress,
+        // phoneNumber,
+        // deliveryAddress,
       });
       newUser
         .save()
         .then((user) => {
-          res.status(201).json({ user: user });
+          res.status(201).json({ token: generateToken(user._id) });
         })
         .catch((err) => {
           res.status(400).json({ msg: err.message });
@@ -44,7 +44,7 @@ const signInUser = (req, res, next) => {
   UserModel.findOne({ email }).exec((err, user) => {
     if (user) {
       bcrypt.compare(password, user.password, (error, match) => {
-        if (error) console.log(error);
+        if (error) res.status(500).json({ msg: error });
         else if (match)
           res.status(200).json({ token: generateToken(user._id) });
         else res.status(403).json({ msg: "wrong email or password" });
@@ -67,7 +67,7 @@ const getUser = async (req, res, next) => {
 
 const updateUser = (req, res, next) => {
   const id = req.user;
-  const { fullName, email, phoneNumber, deliveryAdress } = req.body;
+  const { fullName, email, phoneNumber, deliveryAddress } = req.body;
   try {
     UserModel.findOneAndUpdate(
       id,
@@ -75,13 +75,13 @@ const updateUser = (req, res, next) => {
         fullName,
         email,
         phoneNumber,
-        deliveryAdress,
+        deliveryAddress,
       },
       { returnOriginal: false }
     )
       .then((user) => {
-        console.log(user);
-        res.status(200).json(user);
+        user.password = null;
+        res.status(200).json({ user });
       })
       .catch((err) => res.status(500).json({ msg: err.message }));
   } catch (err) {

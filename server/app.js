@@ -9,10 +9,10 @@ require("dotenv").config();
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const productsRouter = require("./routes/products");
+const checkoutRouter = require("./routes/checkout");
 const ordersRouter = require("./routes/orders");
 
 const app = express();
-
 app.use(cors());
 app.use(logger("dev"));
 app.use(express.json());
@@ -33,6 +33,9 @@ mongoose
 app.use("/", indexRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/products", productsRouter);
+app.use("/api/checkout", checkoutRouter);
+
 app.use("/api/orders", ordersRouter);
+
 
 module.exports = app;
