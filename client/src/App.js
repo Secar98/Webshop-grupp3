@@ -7,7 +7,9 @@ import {useState} from 'react';
 
 
 function App() {
+  //ändra till string
   const [newUser, setNewUser] = useState(Boolean)
+
   return (
     <div>
       <UserContext.Provider value={{newUser, setNewUser}}>

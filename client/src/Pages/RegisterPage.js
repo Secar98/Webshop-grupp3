@@ -21,7 +21,6 @@ export default function RegisterPage() {
             setNewUser(true);
             history.push('/login')
         });
-
     }
 
     const handleOnChange = (e) => {
