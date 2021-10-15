@@ -12,8 +12,30 @@ export default function UserProfilePage() {
                     <FaUser style={{fontSize: '7rem'}} />
                     <h2>Name</h2>
                 </div>
-
-
+                <div>
+                <h4>My profile</h4>      
+                <h4>My Orders</h4>      
+                </div>
+                <p>Logout</p>
+            </div>
+            <div className="col-md-8 border rounded m-3">
+                <h1>My Profile</h1>      
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Full Name</td>
+                            <th>Test</th>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <th>Test@example.com</th>
+                        </tr>
+                        <tr>
+                            <td>Delivery adress</td>
+                            <th>Test adress</th>
+                        </tr>               
+                    </tbody>
+                </table>
             </div>
         </div>
     )
