@@ -12,14 +12,13 @@ export default function LoginPage() {
     })
 
     useEffect(()=>{
-        console.log(`reggar ny användare: ${newUser}`);
         const token = localStorage.getItem("token")
-        if(token){
+        if(token && token !== "undefined"){
             history.push('/homPage')
         }
     },[])
 
-    const handleOnSubmit =  (e) =>{
+    const handleOnSubmit = (e) =>{
         e.preventDefault()
 
         FetchKit.loginFetch(formData)
@@ -35,14 +34,6 @@ export default function LoginPage() {
         setFormData({ ...formData, [e.target.name]: e.target.value})
     }
 
-    const checkNewUser = () =>{
-        if(newUser){
-            return <p>Ny användare Skapad</p>
-
-        }
-    }
-
-    console.log(newUser ?? console.log("HEJ"))
     return (
         <div>
             <form method="POST" onSubmit={handleOnSubmit}>
@@ -50,7 +41,7 @@ export default function LoginPage() {
                 <input name="password" onChange={handleOnChange} type="password" placeholder="password"/>
                 <input type="submit" value="login"/>
             </form>
-            {checkNewUser()}
+            {newUser && <p>Ny användare</p>}
         </div>
     )
 }

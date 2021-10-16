@@ -7,7 +7,9 @@ import {UserContext} from './context/userContext';
 import {useState} from 'react';
 
 function App() {
+  //ändra till string
   const [newUser, setNewUser] = useState(Boolean)
+
   return (
     <div className="container">
       <UserContext.Provider value={{newUser, setNewUser}}>
