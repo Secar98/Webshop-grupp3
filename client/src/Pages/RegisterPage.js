@@ -2,6 +2,8 @@ import React, {useState, useEffect, useContext} from 'react';
 import {useHistory} from 'react-router-dom';
 import FetchKit from '../utils/fetchKit';
 import {UserContext} from '../context/userContext';
+import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/Col';
 
 export default function RegisterPage() {
     const history = useHistory();
@@ -28,12 +30,31 @@ export default function RegisterPage() {
     }
 
   return (
-    <div>
-    <form method="POST" onSubmit={handleOnSubmit}>
-        <input name="email" onChange={handleOnChange} type="text"placeholder="email"/>
-        <input name="password" onChange={handleOnChange} type="password" placeholder="password"/>
-        <input type="submit" value="register"/>
-    </form>
-</div>
+    <Col md={{ span: 6, offset: 3 }} className="colorBackground lightText mt-5 p-5 rounded shadow">
+      <h2>Register</h2>
+      <Form method="POST" onSubmit={handleOnSubmit}>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
+            name="email"
+            onChange={handleOnChange}
+            type="email"
+            placeholder="Enter email"
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            name="password"
+            onChange={handleOnChange}
+            type="password"
+            placeholder="Password"
+          />
+        </Form.Group>
+
+        <input className="btn lightText" type="submit" value="Register" />
+      </Form>
+    </Col>
   );
 }
