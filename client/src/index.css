@@ -28,6 +28,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn:hover{
   background: #14213D;
+  color: #F6F6F6;
 }
 
 a, a:hover{
