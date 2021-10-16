@@ -1,13 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Raleway&display=swap');
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Raleway', sans-serif;
+  color: #14213D;
+  background-color: #E5E5E5;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Lobster', cursive;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.lightText{
+  color: #F6F6F6;
 }
+
+.colorBackground{
+  background-color: #A47C84;
+  border: none;
+}
+
+.btn{
+  background: #FCA311;
+  border: none;
+  border-radius: 10px;
+}
+
+.btn:hover{
+  background: #14213D;
+}
+
+a, a:hover{
+  color: #F6F6F6;
+  text-decoration: none;
+}
+
+/*
+* FRONT PAGE
+*/
+
+.productsTopBar{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+ul{
+  display: flex;
+  flex-direction: row;
+}
+
+li{
+  list-style: none;
+  padding: 0 15px;
+  cursor: pointer;
+}
+
+.search{
+  height: fit-content;
+}
+
+/* 
+* CARDS
+*/
+
+.card-body{
+  padding-top: 0;
+}
+
+.card-img-top{
+  height: 300px;
+  object-fit: cover;
+}
+
+.card-title{
+  font-family: 'Lobster', cursive;
+  font-size: 2rem;
+}
+
+.cardDetails{
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+
+
