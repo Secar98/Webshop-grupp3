@@ -14,7 +14,7 @@ export default function LoginPage() {
     useEffect(()=>{
         const token = localStorage.getItem("token")
         if(token && token !== "undefined"){
-            history.push('/homPage')
+            history.push('/')
         }
     },[])
 
@@ -25,7 +25,7 @@ export default function LoginPage() {
         .then((res) => res.json())
         .then(item =>{
             localStorage.setItem("token", item.token)
-            history.push('/homePage')
+            history.push('/')
         })    
 
     }

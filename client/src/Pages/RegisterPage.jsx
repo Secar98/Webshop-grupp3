@@ -15,15 +15,14 @@ export default function RegisterPage() {
       email: e.target[1].value,
       password: e.target[2].value,
       phoneNumber: e.target[3].value,
-      deliveryAdress: {
+      deliveryAddress: {
         postalCode: e.target[4].value,
-        streetAdress: e.target[5].value,
+        streetAddress: e.target[5].value,
         city: e.target[6].value,
       },
     };
+console.log(`reg: ${formData}`)
 
-    //test------------------------
-    
     FetchKit.registerFetch(formData)
       .then((res) => res.json())
       .then((item) => {
@@ -40,7 +39,7 @@ export default function RegisterPage() {
         <input name="password" type="password" placeholder="password" />
         <input name="phoneNumber" type="tel" placeholder="Phone" />
         <input name="postalCode" type="number" placeholder="Postalcode" />
-        <input name="streetAdress" type="text" placeholder="Streetadress" />
+        <input name="streetAddress" type="text" placeholder="Streetadress" />
         <input name="city" type="text" placeholder="City" />
         <input type="submit" value="register" />
       </form>

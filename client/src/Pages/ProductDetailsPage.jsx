@@ -1,24 +1,22 @@
 import React, {useEffect, useState} from 'react'
 
-export default function ProductDetailsPage() {
-
+export default function ProductDetailsPage(props) {
   const [productData, setProductData] = useState(null);
   const [pictureData, setPictureData] = useState(null);
   let pictures;
 
   async function fetchData(){
-    const baseUrl = (window.location).href; 
-    const id = baseUrl.substring(baseUrl.lastIndexOf('/') + 1);
+    const id = props.match.params.id;
+    const url = `http://localhost:3000/api/products/${id}`;
 
-    const url = 'http://localhost:3000/api/products/';
-    const url2 = url + id;
-
-    await fetch(url2)
+    await fetch(url)
       .then(res => res.json())
       .then(data => {
-        setProductData(data)
-        setPictureData(data.pictures)
-      })
+        if(data){
+          setProductData(data)
+          setPictureData(data.pictures)
+        }
+      }).catch (err => console.log(err.message));
   }
 
   useEffect( () => {
