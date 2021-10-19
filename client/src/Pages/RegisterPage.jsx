@@ -21,7 +21,6 @@ export default function RegisterPage() {
         city: e.target[6].value,
       },
     };
-console.log(`reg: ${formData}`)
 
     FetchKit.registerFetch(formData)
       .then((res) => res.json())
