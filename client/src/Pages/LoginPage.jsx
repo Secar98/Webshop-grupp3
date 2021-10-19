@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext} from 'react'
 import {useHistory} from 'react-router-dom'
 import FetchKit from '../utils/fetchKit'
 import {UserContext} from '../context/userContext';
+import Navigation from '../components/Navigation';
 
 export default function LoginPage() {
     const history = useHistory();
@@ -35,6 +36,8 @@ export default function LoginPage() {
     }
 
     return (
+      <>
+        <Navigation />
         <div>
             <form method="POST" onSubmit={handleOnSubmit}>
                 <input name="email" onChange={handleOnChange} type="text"placeholder="email"/>
@@ -43,5 +46,6 @@ export default function LoginPage() {
             </form>
             {newUser && <p>Ny användare</p>}
         </div>
+      </>
     )
 }

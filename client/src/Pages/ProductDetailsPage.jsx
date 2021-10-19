@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import Navigation from '../components/Navigation';
 
 export default function ProductDetailsPage() {
 
@@ -30,32 +31,35 @@ export default function ProductDetailsPage() {
   }
 
   return (
-    <div>
-      <h1>product details page</h1>
-      {productData ? 
+    <>
+      <Navigation/>
+      <div>
+        <h1>product details page</h1>
+        {productData ? 
 
-      <>
-        <h2>{productData.title}</h2>
-        <p>{productData.description}</p>
-        <p>{productData.price} kr</p>
+        <>
+          <h2>{productData.title}</h2>
+          <p>{productData.description}</p>
+          <p>{productData.price} kr</p>
 
-        {pictures ? 
-        pictures.map((value) => {
-          return <img src={value} />
-        })
-        : "pictures loading..."}
+          {pictures ? 
+          pictures.map((value) => {
+            return <img src={value} />
+          })
+          : "pictures loading..."}
 
-        <p>Product details</p>
-        <p>Category: {productData.category[0]}, {productData.category[1]}</p>
-        <p>Manufactorer: {productData.manufactorer}</p>
-        <p>Weight: {productData.weight} g</p>
+          <p>Product details</p>
+          <p>Category: {productData.category[0]}, {productData.category[1]}</p>
+          <p>Manufactorer: {productData.manufactorer}</p>
+          <p>Weight: {productData.weight} g</p>
 
-      </>
-      
-      : <h1>Loading...</h1>}
-      
-      
-    </div>
+        </>
+        
+        : <h1>Loading...</h1>}
+        
+        
+      </div>
+  </>
   )
 }
 

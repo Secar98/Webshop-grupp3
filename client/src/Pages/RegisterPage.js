@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import {useHistory} from 'react-router-dom';
 import FetchKit from '../utils/fetchKit';
 import {UserContext} from '../context/userContext';
+import Navigation from '../components/Navigation';
 
 export default function RegisterPage() {
     const history = useHistory();
@@ -28,12 +29,15 @@ export default function RegisterPage() {
     }
 
   return (
+    <>
+    <Navigation/>
     <div>
-    <form method="POST" onSubmit={handleOnSubmit}>
-        <input name="email" onChange={handleOnChange} type="text"placeholder="email"/>
-        <input name="password" onChange={handleOnChange} type="password" placeholder="password"/>
-        <input type="submit" value="register"/>
-    </form>
-</div>
+        <form method="POST" onSubmit={handleOnSubmit}>
+            <input name="email" onChange={handleOnChange} type="text"placeholder="email"/>
+            <input name="password" onChange={handleOnChange} type="password" placeholder="password"/>
+            <input type="submit" value="register"/>
+        </form>
+    </div>
+    </>
   );
 }
