@@ -22,6 +22,8 @@ export default function RegisterPage() {
       },
     };
 
+    //test------------------------
+    
     FetchKit.registerFetch(formData)
       .then((res) => res.json())
       .then((item) => {
