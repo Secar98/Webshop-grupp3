@@ -16,11 +16,11 @@ const userSchema = new Schema({
     unique: true,
   },
   phoneNumber: {
-    type: Number,
+    type: String,
     required: true,
   },
   deliveryAddress: {
-    postalCode: { type: Number, required: true },
+    postalCode: { type: String, required: true },
     streetAddress: { type: String, required: true },
     city: { type: String, required: true },
   },
