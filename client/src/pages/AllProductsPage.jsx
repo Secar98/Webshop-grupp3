@@ -1,11 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import ProductListItem from '../components/ProductListItem';
+import {UserContext} from '../context/userContext';
+import FetchKit from '../utils/fetchKit';
 
 export default function AllProductsPage() {
 
   const [productsData, setProductsData] = useState(null);
   const [filteredData, setFilteredData] = useState(null);
   const [searchField, setSearchField] = useState("");
+  const {user,setUser} = useContext(UserContext);
 
   function fetchData() {
     const url = 'http://localhost:3000/api/products/';
@@ -17,9 +20,22 @@ export default function AllProductsPage() {
       })
 
   }
+  const getUser =  ()=>{ 
+    const token=localStorage.getItem("token")
+    if(token){
+      FetchKit.FetchUser(token)
+            .then(res=>res.json())
+            .then(data=> {
+              setUser(data)
+              console.log(data)
+          })
+          .then(()=>console.log(user))
+}
+  }
 
   useEffect( () => {
     fetchData()
+    getUser()
   }, [])
 
   //sorting function, takes category as a parameter, returns products in that category.
@@ -49,7 +65,7 @@ export default function AllProductsPage() {
   return (
       
       <div>
-
+        {user&& <h1>{user.email}</h1>}
         {!filteredData && <h1>Loading...</h1>}
 
         {filteredData && 

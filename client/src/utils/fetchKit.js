@@ -25,4 +25,15 @@ export default class FetchKit{
         
         })
     }
+    static FetchUser = (token )=>{
+        const url = 'http://localhost:3000/api/users/'
+        return fetch(url,{
+              method: "GET",
+              headers:{
+                  "Content-Type":"application/json",
+                  "Authorization": token
+              }
+          })
+        }
+    
 }
