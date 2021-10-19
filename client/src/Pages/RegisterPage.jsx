@@ -1,11 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import FetchKit from "../utils/fetchKit";
-import { UserContext } from "../context/userContext";
 
 export default function RegisterPage() {
   const history = useHistory();
-  const { setNewUser } = useContext(UserContext);
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
@@ -25,22 +23,39 @@ export default function RegisterPage() {
     FetchKit.registerFetch(formData)
       .then((res) => res.json())
       .then((item) => {
-        setNewUser(true);
-        history.push("/login");
+        if (item) {
+          localStorage.setItem("token", item.token);
+          history.push("/");
+        }
       });
   };
 
   return (
     <div>
       <form method="POST" onSubmit={handleOnSubmit}>
-        <input name="fullName" type="text" placeholder="Fullname" />
-        <input name="email" type="email" placeholder="email" />
-        <input name="password" type="password" placeholder="password" />
-        <input name="phoneNumber" type="tel" placeholder="Phone" />
-        <input name="postalCode" type="number" placeholder="Postalcode" />
-        <input name="streetAddress" type="text" placeholder="Streetadress" />
-        <input name="city" type="text" placeholder="City" />
-        <input type="submit" value="register" />
+        <input required name="fullName" type="text" placeholder="Fullname" />
+        <input required name="email" type="email" placeholder="email" />
+        <input
+          required
+          name="password"
+          type="password"
+          placeholder="password"
+        />
+        <input required name="phoneNumber" type="tel" placeholder="Phone" />
+        <input
+          required
+          name="postalCode"
+          type="number"
+          placeholder="Postalcode"
+        />
+        <input
+          required
+          name="streetAddress"
+          type="text"
+          placeholder="Streetadress"
+        />
+        <input required name="city" type="text" placeholder="City" />
+        <input required type="submit" value="register" />
       </form>
     </div>
   );
