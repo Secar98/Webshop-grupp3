@@ -35,5 +35,21 @@ export default class FetchKit{
               }
           })
         }
+
+        static editFetch = (formData,token) => {
+
+        const url = "http://localhost:3000/api/users" 
+
+        return fetch(url, {
+            method: "POST", 
+            headers:{
+                "accept": "application/json", 
+                "Content-Type": "application/json",
+                "Authorization": token
+            }, 
+            body: JSON.stringify(formData)
+        
+        })
+    }
     
 }
