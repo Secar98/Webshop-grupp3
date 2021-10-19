@@ -87,19 +87,24 @@ const getUser =  ()=>{
                         <tbody>
                             <tr>
                                 <td>Name</td>
-                                <th>Fullname</th>
+                                <th>{user.fullName}</th>
                             </tr>
                             <tr>
                                 <td>Email</td>
                                 <th>{user.email}</th>
                             </tr>
-                            <tr>
-                                <td>Delivery adress</td>
-                                <th>Test adress</th>
+                            <tr >
+                                <td >Delivery adress</td>
+                                <th>
+                                    {user.deliveryAddress.streetAddress},
+                                    {user.deliveryAddress.city},
+                                    {user.deliveryAddress.postalCode}
+                                
+                                </th>
                             </tr>               
                             <tr>
                                 <td>Phone number</td>
-                                <th>Test phone</th>
+                                <th>{user.phoneNumber}</th>
                             </tr>               
                         </tbody>
                     </table>
