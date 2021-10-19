@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react';
+import {Button} from 'react-bootstrap';
 
 export default function ProductDetailsPage(props) {
   const [productData, setProductData] = useState(null);
@@ -26,6 +27,7 @@ export default function ProductDetailsPage(props) {
   if(pictureData){
     pictures = [pictureData.picture1, pictureData.picture2, pictureData.picture3];
   }
+
 
   return (
     <div>

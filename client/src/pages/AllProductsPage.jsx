@@ -46,6 +46,13 @@ export default function AllProductsPage() {
     setSearchField(e.target.value); 
   };
 
+
+  const onAddHandler = (id) => {
+    let products = [];
+    const shipping = 100;
+  }
+
+
   return (
       
       <div>
@@ -75,7 +82,7 @@ export default function AllProductsPage() {
                 return (
                   <>
                     <div className="col-md-4">
-                      <ProductListItem key={index} product={product}/>
+                      <ProductListItem onAdd={onAddHandler} key={index} product={product}/>
                     </div>
                   </>
                 )
