@@ -13,19 +13,21 @@ export default function ProductListItem(props) {
 
   return (
     <>
-      <Card style={{ width: "18rem" }}>
-        <Card.Img variant="top" src={pictures.picture1} />
+      <Card className="shadow lightText colorBackground m-3">
+        <Card.Img className="p-3" variant="top" src={pictures.picture1} />
         <Card.Body>
           <Card.Title>{title}</Card.Title>
-          <Card.Text>{price} SEK</Card.Text>
-          <Button variant="primary">
-            <Link className=" text-white" to={`/${_id}`}>
-              Go somewhere
-            </Link>
-          </Button>
-          <Button onClick={onClickHandler} value={_id}>
-            Add Product
-          </Button>
+          <div className="cardDetails">
+            <Card.Text>{price} SEK</Card.Text>
+            <Button>
+              <Link to={`/${_id}`} className="lightText">
+                Go somewhere
+              </Link>
+            </Button>
+            <Button onClick={onClickHandler} value={_id}>
+              Add Product
+            </Button>
+          </div>
         </Card.Body>
       </Card>
     </>

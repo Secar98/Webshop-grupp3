@@ -2,10 +2,12 @@ import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import FetchKit from "../utils/fetchKit";
 import { UserContext } from "../context/userContext";
+import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
 
 export default function LoginPage() {
   const history = useHistory();
-  const { newUser } = useContext(UserContext);
+  const { setNewUser, newUser } = useContext(UserContext);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -36,25 +38,35 @@ export default function LoginPage() {
   };
 
   return (
-    <div>
-      <form method="POST" onSubmit={handleOnSubmit}>
-        <input
-          name="email"
-          onChange={handleOnChange}
-          type="text"
-          placeholder="email"
-          required
-        />
-        <input
-          name="password"
-          onChange={handleOnChange}
-          type="password"
-          placeholder="password"
-          required
-        />
-        <input type="submit" value="login" />
-      </form>
+    <Col
+      md={{ span: 6, offset: 3 }}
+      className="colorBackground lightText mt-5 p-5 rounded shadow"
+    >
+      <h2>Log in</h2>
+      <Form method="POST" onSubmit={handleOnSubmit}>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
+            name="email"
+            onChange={handleOnChange}
+            type="email"
+            placeholder="Enter email"
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            name="password"
+            onChange={handleOnChange}
+            type="password"
+            placeholder="Password"
+          />
+        </Form.Group>
+
+        <input className="btn lightText" type="submit" value="login" />
+      </Form>
       {newUser && <p>Ny användare</p>}
-    </div>
+    </Col>
   );
 }
