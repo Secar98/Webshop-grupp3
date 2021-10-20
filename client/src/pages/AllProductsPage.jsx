@@ -30,6 +30,10 @@ export default function AllProductsPage() {
     })
     setFilteredData(productsInCategory);
   }
+
+  function getAllProducts() {
+    setFilteredData(productsData);
+  }
   
 
   /*search function, if a search field exists, filter by search field value and save to result. 
@@ -57,9 +61,14 @@ export default function AllProductsPage() {
         
         <>
           <Navigation />
-          <input type="text" onChange={handleChange} value={searchField} placeholder="search"/>
-          <h2 onClick={()=>getProductsByCategory("women")}>women</h2>
-          <h2 onClick={()=>getProductsByCategory("men")}>men</h2>
+          <div className="productsTopBar">
+            <ul>
+              <li><h4 onClick={()=>getAllProducts()}>show all</h4></li>
+              <li><h4 onClick={()=>getProductsByCategory("women")}>women</h4></li>
+              <li><h4 onClick={()=>getProductsByCategory("men")}>men</h4></li>
+            </ul>
+            <input className="search" type="text" onChange={handleChange} value={searchField} placeholder="search"/>
+          </div>
           {/* if search result exists, map through array and render it. If no search result, render 
           full data or filtered data (depending upon filter by category) */}
           { result ? 
