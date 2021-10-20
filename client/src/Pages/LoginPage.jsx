@@ -4,6 +4,7 @@ import FetchKit from "../utils/fetchKit";
 import { UserContext } from "../context/userContext";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
+import Navigation from '../components/Navigation';
 
 export default function LoginPage() {
   const history = useHistory();
@@ -36,6 +37,8 @@ export default function LoginPage() {
   };
 
   return (
+    <>
+    <Navigation />
     <Col md={{ span: 6, offset: 3 }} className="colorBackground lightText mt-5 p-5 rounded shadow">
       <h2>Log in</h2>
       <Form method="POST" onSubmit={handleOnSubmit}>
@@ -58,10 +61,10 @@ export default function LoginPage() {
             placeholder="Password"
           />
         </Form.Group>
-
         <input className="btn lightText" type="submit" value="login" />
       </Form>
       {newUser && <p>Ny användare</p>}
     </Col>
+  </>
   );
 }

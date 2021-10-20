@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import {useHistory} from 'react-router-dom';
 import FetchKit from '../utils/fetchKit';
 import {UserContext} from '../context/userContext';
+import Navigation from '../components/Navigation';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 
@@ -30,6 +31,8 @@ export default function RegisterPage() {
     }
 
   return (
+    <>
+    <Navigation/>
     <Col md={{ span: 6, offset: 3 }} className="colorBackground lightText mt-5 p-5 rounded shadow">
       <h2>Register</h2>
       <Form method="POST" onSubmit={handleOnSubmit}>
