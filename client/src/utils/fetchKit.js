@@ -36,14 +36,13 @@ export default class FetchKit{
           })
         }
 
-        static editFetch = (formData,token) => {
+        static editFetch = (formData,token,id) => {
 
-        const url = "http://localhost:3000/api/users" 
+        const url = `http://localhost:3000/api/users/${id}`
 
         return fetch(url, {
             method: "POST", 
             headers:{
-                "accept": "application/json", 
                 "Content-Type": "application/json",
                 "Authorization": token
             }, 

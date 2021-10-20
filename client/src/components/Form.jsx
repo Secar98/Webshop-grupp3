@@ -1,6 +1,6 @@
 import FetchKit from '../utils/fetchKit';
 
-export default function Form({fullName,email,phoneNumber, deliveryAddress}) {
+export default function Form({_id,fullName,email,phoneNumber, deliveryAddress}) {
 
     const handleOnSubmit =  (e) =>{
         e.preventDefault()
@@ -15,7 +15,7 @@ export default function Form({fullName,email,phoneNumber, deliveryAddress}) {
       },
     };
         const token = localStorage.getItem('token')
-        FetchKit.editFetch(newData,token)
+        FetchKit.editFetch(newData,token,_id)
         .then((res) => res.json())
         .then(item =>{
             console.log(item)
