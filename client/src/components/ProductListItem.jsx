@@ -11,7 +11,7 @@ export default function ProductListItem({product}) {
         <Card.Img className="p-3" variant="top" src={pictures.picture1} />
         <Card.Body>
           <Card.Title>{title}</Card.Title>
-          <div className="cardDetails">
+          <div className="flex">
             <Card.Text>{price} SEK</Card.Text>
             <Button><Link to={`/${_id}`} className="lightText">Go somewhere</Link></Button>
           </div>

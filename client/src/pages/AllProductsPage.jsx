@@ -61,7 +61,7 @@ export default function AllProductsPage() {
         
         <>
           <Navigation />
-          <div className="productsTopBar">
+          <div className="flex p-3">
             <ul>
               <li><h4 onClick={()=>getAllProducts()}>show all</h4></li>
               <li><h4 onClick={()=>getProductsByCategory("women")}>women</h4></li>

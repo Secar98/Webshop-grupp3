@@ -1,4 +1,7 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react';
+import Image from 'react-bootstrap/Image';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 import Navigation from '../components/Navigation';
 
 export default function ProductDetailsPage() {
@@ -32,34 +35,48 @@ export default function ProductDetailsPage() {
 
   return (
     <>
-      <Navigation/>
-      <div>
-        <h1>product details page</h1>
-        {productData ? 
+    <Navigation />
+    <div className="row">
+      {productData ? 
 
-        <>
-          <h2>{productData.title}</h2>
-          <p>{productData.description}</p>
-          <p>{productData.price} kr</p>
+      <>
+      
+      <Card.Title className="text-center p-3">{productData.title}</Card.Title>
+        <div className="flex col-md-5 p-3 m-2 colorBackground shadow">
+          <div>
+            {pictures ? 
+            pictures.map((value) => {
+              return <Image className="smallPic m-2" src={value} />
+            })
+            : "pictures loading..."}
+          </div>
+          <div className="largePic">
+            {pictures ? <Image src={pictures[0]} fluid /> : "loading"}
+          </div>
+        </div>
 
-          {pictures ? 
-          pictures.map((value) => {
-            return <img src={value} />
-          })
-          : "pictures loading..."}
+        <Card className="col-md-6 p-3 m-2 shadow">
+          <Card.Body>
+            <Card.Text>{productData.description}</Card.Text>
+            <div className="flex">
+              <Card.Text>Price: {productData.price} kr</Card.Text>
+              <Button className="lightText">Add to cart</Button>
+            </div>
+          </Card.Body>
+          <Card.Footer className="col-12">
+              <Card.Text>Category: {productData.category[0]}, {productData.category[1]}</Card.Text>
+              <Card.Text>Manufactorer: {productData.manufactorer}</Card.Text>
+              <Card.Text>Weight: {productData.weight} g</Card.Text>
+            </Card.Footer>
+        </Card>
 
-          <p>Product details</p>
-          <p>Category: {productData.category[0]}, {productData.category[1]}</p>
-          <p>Manufactorer: {productData.manufactorer}</p>
-          <p>Weight: {productData.weight} g</p>
-
-        </>
-        
-        : <h1>Loading...</h1>}
-        
-        
-      </div>
-  </>
+      </>
+      
+      : <h1>Loading...</h1>}
+      
+      
+    </div>
+    </>
   )
 }
 
