@@ -42,7 +42,7 @@ export default function AllProductsPage() {
    
     filteredData.filter((product) => {
       return (
-        product.title === searchField
+        product.title.includes(searchField)
       )
     }
     )
