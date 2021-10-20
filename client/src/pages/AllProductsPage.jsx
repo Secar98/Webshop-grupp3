@@ -19,17 +19,22 @@ export default function AllProductsPage() {
   };
 
   const countCart = (cart) => {
-    const counts = {};
-    for (const num of cart) {
-      counts[num] = counts[num] ? counts[num] + 1 : 1;
+    if(cart.length > 0) {
+
+      const counts = {};
+      for (const num of cart) {
+        counts[num] = counts[num] ? counts[num] + 1 : 1;
+      }
+      localStorage.setItem("Cart", JSON.stringify(Object.entries(counts)));
     }
-    localStorage.setItem("Cart", JSON.stringify(Object.entries(counts)));
   };
 
   useEffect(() => {
     countCart(cart);
     fetchData();
   }, [cart]);
+
+  
 
   //sorting function, takes category as a parameter, returns products in that category.
   function getProductsByCategory(category) {
