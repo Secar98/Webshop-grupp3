@@ -59,5 +59,6 @@ export default function RegisterPage() {
         <input className="btn lightText" type="submit" value="Register" />
       </Form>
     </Col>
+    </>
   );
 }
