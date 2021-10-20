@@ -16,9 +16,9 @@ export default function LoginPage() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token && token !== "undefined") {
-      history.push("/homPage");
+      history.push("/");
     }
-  }, []);
+  }, [history]);
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
@@ -26,8 +26,10 @@ export default function LoginPage() {
     FetchKit.loginFetch(formData)
       .then((res) => res.json())
       .then((item) => {
-        localStorage.setItem("token", item.token);
-        history.push("/homePage");
+        if (item) {
+          localStorage.setItem("token", item.token);
+          history.push("/");
+        }
       });
   };
 
@@ -36,7 +38,10 @@ export default function LoginPage() {
   };
 
   return (
-    <Col md={{ span: 6, offset: 3 }} className="colorBackground lightText mt-5 p-5 rounded shadow">
+    <Col
+      md={{ span: 6, offset: 3 }}
+      className="colorBackground lightText mt-5 p-5 rounded shadow"
+    >
       <h2>Log in</h2>
       <Form method="POST" onSubmit={handleOnSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
