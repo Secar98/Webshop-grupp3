@@ -18,7 +18,7 @@ export default function AllProductsPage() {
       });
   };
 
-  const countCart = () => {
+  const countCart = (cart) => {
     const counts = {};
     for (const num of cart) {
       counts[num] = counts[num] ? counts[num] + 1 : 1;
