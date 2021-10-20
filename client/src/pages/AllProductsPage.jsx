@@ -6,7 +6,9 @@ export default function AllProductsPage() {
   const [productsData, setProductsData] = useState(null);
   const [filteredData, setFilteredData] = useState(null);
   const [searchField, setSearchField] = useState("");
-  const [cart, setCart] = useState([]);
+
+  const oldCart = JSON.parse(localStorage.getItem("Cart"));
+  const [cart, setCart] = useState(oldCart || []);
 
   const fetchData = () => {
     const url = "http://localhost:3000/api/products/";
@@ -18,23 +20,14 @@ export default function AllProductsPage() {
       });
   };
 
-  const countCart = (cart) => {
-    if(cart.length > 0) {
-
-      const counts = {};
-      for (const num of cart) {
-        counts[num] = counts[num] ? counts[num] + 1 : 1;
-      }
-      localStorage.setItem("Cart", JSON.stringify(Object.entries(counts)));
-    }
+  const setCartLocalStorage = (cart) => {
+    localStorage.setItem("Cart", JSON.stringify(cart));
   };
 
   useEffect(() => {
-    countCart(cart);
+    setCartLocalStorage(cart);
     fetchData();
   }, [cart]);
-
-  
 
   //sorting function, takes category as a parameter, returns products in that category.
   function getProductsByCategory(category) {
