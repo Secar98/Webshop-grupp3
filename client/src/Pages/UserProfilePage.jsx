@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
 import {UserContext} from '../context/userContext';
-
 import { FaUser } from 'react-icons/fa';
 import OrderItem from '../components/OrderItem';
 import Form from '../components/Form';
@@ -8,11 +7,9 @@ import Form from '../components/Form';
 export default function UserProfilePage() {
     const url = 'http://localhost:3000/api/orders'
     const[orders,setOrders] = useState(null)
-    const[showProfile,setShowProfile] = useState(true)
     const[showOrders,setShowOrders] = useState(false)
-    const[showEdit,setShowEdit] = useState(false)
-
-    const {user,setUser} = useContext(UserContext);
+    
+    const {user,setUser,showEdit, setShowEdit,showProfile,setShowProfile} = useContext(UserContext);
     console.log(user)
     useEffect(()=>{
         const token=localStorage.getItem("token")
@@ -48,25 +45,24 @@ const getUser =  ()=>{
               setUser(data)
               console.log(data)
           })
-          .then(()=>console.log(user))
         }
       }
 
     const handleProfile = ()=>{
         setShowProfile (true)
         setShowOrders (false)
+        setShowEdit(false)
     }
     const handleOrder = ()=>{
         setShowProfile (false)
         setShowOrders (true)
+        setShowEdit(false)
     }
     const handleEdit = ()=>{
         setShowProfile (false)
         setShowEdit(true)
+        setShowOrders (false)
     }
-
-
-    // Get user data- check if a user is present fetch data from /api/user here or get it from the context if saved there
     return (
         <div className="row">
             

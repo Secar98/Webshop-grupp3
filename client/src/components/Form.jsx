@@ -1,25 +1,34 @@
+import React, {useContext} from 'react'
 import FetchKit from '../utils/fetchKit';
+import {UserContext} from '../context/userContext';
 
 export default function Form({_id,fullName,email,phoneNumber, deliveryAddress}) {
 
-    const handleOnSubmit =  (e) =>{
+    const {setShowEdit,setShowProfile,setUser} = useContext(UserContext);
+
+    const handleOnSubmit =  async (e) =>{
         e.preventDefault()
+        setShowEdit(false)
         const newData ={
-        fullName: e.target[0].value,
-        email: e.target[1].value,
-        phoneNumber: e.target[2].value,
-        deliveryAddress: {
-            postalCode: e.target[3].value,
-            streetAddress: e.target[4].value,
-            city: e.target[5].value,
-      },
-    };
+            fullName: e.target[0].value,
+            email: e.target[1].value,
+            phoneNumber: e.target[2].value,
+            deliveryAddress: {
+                postalCode: e.target[3].value,
+                streetAddress: e.target[4].value,
+                city: e.target[5].value,
+            },
+        };
+        setShowProfile(true)
+        window.location.reload()
+        // setUser({...newData,_id})
         const token = localStorage.getItem('token')
         FetchKit.editFetch(newData,token,_id)
         .then((res) => res.json())
         .then(item =>{
             console.log(item)
         });
+        
     }
 
     return (
