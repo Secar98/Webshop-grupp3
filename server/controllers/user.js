@@ -69,7 +69,7 @@ const updateUser = (req, res, next) => {
   const id = req.user;
   const { fullName, email, phoneNumber, deliveryAddress } = req.body;
   try {
-    UserModel.findOneAndUpdate(
+    UserModel.findByIdAndUpdate(
       id,
       {
         fullName,
