@@ -8,6 +8,7 @@ export default function ProductDetailsPage() {
 
   const [productData, setProductData] = useState(null);
   const [pictureData, setPictureData] = useState(null);
+  const [largePic, setLargePic] = useState(null);
   let pictures;
 
   async function fetchData(){
@@ -22,6 +23,7 @@ export default function ProductDetailsPage() {
       .then(data => {
         setProductData(data)
         setPictureData(data.pictures)
+        setLargePic(data.pictures.picture1)
       })
   }
 
@@ -31,6 +33,18 @@ export default function ProductDetailsPage() {
 
   if(pictureData){
     pictures = [pictureData.picture1, pictureData.picture2, pictureData.picture3];
+    
+    if(pictures[2]==null){
+      pictures.pop();
+    }
+    if(pictures[1]==null){
+      pictures.pop();
+    }
+  }
+
+  function handleOnClick(e){
+    e.preventDefault();
+    setLargePic(pictures[e.target.id]);
   }
 
   return (
@@ -45,13 +59,13 @@ export default function ProductDetailsPage() {
         <div className="flex col-md-5 p-3 m-2 colorBackground shadow">
           <div>
             {pictures ? 
-            pictures.map((value) => {
-              return <Image className="smallPic m-2" src={value} />
+            pictures.map((value, key) => {
+              return <Image className="smallPic m-2" id={key} src={value} onClick={handleOnClick}/>
             })
             : "pictures loading..."}
           </div>
           <div className="largePic">
-            {pictures ? <Image src={pictures[0]} fluid /> : "loading"}
+            {pictures ? <Image src={largePic} fluid /> : "loading"}
           </div>
         </div>
 
