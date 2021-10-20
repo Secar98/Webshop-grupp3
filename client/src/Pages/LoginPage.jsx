@@ -4,6 +4,7 @@ import FetchKit from "../utils/fetchKit";
 import { UserContext } from "../context/userContext";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
+import Navigation from "../components/Navigation";
 
 export default function LoginPage() {
   const history = useHistory();
@@ -38,35 +39,37 @@ export default function LoginPage() {
   };
 
   return (
-    <Col
-      md={{ span: 6, offset: 3 }}
-      className="colorBackground lightText mt-5 p-5 rounded shadow"
-    >
-      <h2>Log in</h2>
-      <Form method="POST" onSubmit={handleOnSubmit}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            name="email"
-            onChange={handleOnChange}
-            type="email"
-            placeholder="Enter email"
-          />
-        </Form.Group>
+    <>
+      <Navigation />
+      <Col
+        md={{ span: 6, offset: 3 }}
+        className="colorBackground lightText mt-5 p-5 rounded shadow"
+      >
+        <h2>Log in</h2>
+        <Form method="POST" onSubmit={handleOnSubmit}>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control
+              name="email"
+              onChange={handleOnChange}
+              type="email"
+              placeholder="Enter email"
+            />
+          </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            name="password"
-            onChange={handleOnChange}
-            type="password"
-            placeholder="Password"
-          />
-        </Form.Group>
-
-        <input className="btn lightText" type="submit" value="login" />
-      </Form>
-      {newUser && <p>Ny användare</p>}
-    </Col>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              name="password"
+              onChange={handleOnChange}
+              type="password"
+              placeholder="Password"
+            />
+          </Form.Group>
+          <input className="btn lightText" type="submit" value="login" />
+        </Form>
+        {newUser && <p>Ny användare</p>}
+      </Col>
+    </>
   );
 }

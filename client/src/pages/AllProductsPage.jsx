@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Navigation from "../components/Navigation";
 import ProductListItem from "../components/ProductListItem";
 
 export default function AllProductsPage() {
@@ -64,6 +65,7 @@ export default function AllProductsPage() {
 
       {filteredData && (
         <>
+          <Navigation />
           <div className="productsTopBar">
             <ul>
               <li>
