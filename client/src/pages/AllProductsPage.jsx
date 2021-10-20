@@ -22,7 +22,7 @@ export default function AllProductsPage() {
     for (const num of cart) {
       counts[num] = counts[num] ? counts[num] + 1 : 1;
     }
-    localStorage.setItem("Cart", JSON.stringify(counts));
+    localStorage.setItem("Cart", JSON.stringify(Object.entries(counts)));
   };
 
   useEffect(() => {
