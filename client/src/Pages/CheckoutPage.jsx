@@ -23,10 +23,8 @@ const CheckoutPage = () => {
       for (const num of cart) {
         counts[num] = counts[num] ? counts[num] + 1 : 1;
       }
-      console.log("count cart");
-      console.log(Object.entries(counts));
-
-      return(Object.entries(counts));
+      
+      return Object.entries(counts);
     }
   };
 
@@ -34,40 +32,37 @@ const CheckoutPage = () => {
     fetchData();
     countCart();
   }, []);
-
-  const cart = JSON.parse(localStorage.getItem("Cart"));
-
-  if(productsData){
-    countCart.map(Item => {
-      const testProd = productsData.find(product => 
-        product._id === Item)
-        console.log(testProd);
-      });
-  }
-
+  const cartArray = countCart()
+  
   return (
     <Container>
       <Navigation />
       <h1 class="mt-5">Du är på checkoutPage</h1>
 
-    {/* {productsData && */}
-    {/* cart.map(Item => {
-      const testProd = productsData.find(product => 
-        product._id === Item)
-        return(
-          <ListGroup class="p-2 bg-light border mt-5" as="ol" numbered>
-            <ListGroup.Item as="li">{testProd.title}</ListGroup.Item>
-            <ListGroup.Item as="li">{testProd.price}</ListGroup.Item>
-            <ListGroup.Item as="li">{testProd}</ListGroup.Item>
-            <ListGroup.Item as="li">{testProd}</ListGroup.Item>
-          </ListGroup>
-        )
-      }) */}
-    }
-
-      {/* <ListGroup class="p-2 bg-light border mt-5" as="ol" numbered>
-        <ListGroup.Item as="li">{localStorage.getItem("Cart")}</ListGroup.Item>
-      </ListGroup> */}
+      {
+        (productsData && cartArray) &&
+        cartArray.map((item, index)=> {
+          const testProd = productsData.find(product => product._id === item[0])
+          const sum = Number(testProd.price*item[1])
+          return (<>
+            <ListGroup class="p-2 bg-light border mt-5" as="ol" numbered>
+              <ListGroup.Item as="li">
+                <p>Title: {testProd.title}</p>
+                <p>Price: {testProd.price}</p>
+                <p>Amount: {item[1]}</p>
+                <b class="bald">sum: {sum}</b>
+              </ListGroup.Item>
+            </ListGroup>
+            </>
+          ) 
+        })
+      }
+    
+      <ListGroup class="p-2 bg-light border mt-5" as="ol" numbered>
+        <ListGroup.Item as="li">
+          
+        </ListGroup.Item>
+      </ListGroup>
     </Container>
   );
 };
