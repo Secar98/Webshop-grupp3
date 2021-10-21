@@ -51,7 +51,6 @@ export default function AllProductsPage() {
   return (
       
       <div>
-        {user&& <h1>{user.email}</h1>}
         {!filteredData && <h1>Loading...</h1>}
 
         {filteredData && 
