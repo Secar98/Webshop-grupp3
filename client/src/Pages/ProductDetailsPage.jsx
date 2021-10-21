@@ -4,8 +4,6 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Navigation from '../components/Navigation';
 
-export default function ProductDetailsPage() {
-
 export default function ProductDetailsPage(props) {
   const [productData, setProductData] = useState(null);
   const [pictureData, setPictureData] = useState(null);
