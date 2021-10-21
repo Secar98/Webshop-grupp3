@@ -4,7 +4,7 @@ import {UserContext} from '../context/userContext';
 
 export default function Form({_id,fullName,email,phoneNumber, deliveryAddress}) {
 
-    const {setShowEdit,setShowProfile,setUser} = useContext(UserContext);
+    const {setShowEdit,setShowProfile,setUser,getUser} = useContext(UserContext);
 
     const handleOnSubmit =  async (e) =>{
         e.preventDefault()
@@ -20,13 +20,11 @@ export default function Form({_id,fullName,email,phoneNumber, deliveryAddress}) 
             },
         };
         setShowProfile(true)
-        window.location.reload()
-        // setUser({...newData,_id})
         const token = localStorage.getItem('token')
         FetchKit.editFetch(newData,token,_id)
         .then((res) => res.json())
         .then(item =>{
-            console.log(item)
+            getUser()
         });
         
     }

@@ -8,7 +8,7 @@ export default function AllProductsPage() {
   const [productsData, setProductsData] = useState(null);
   const [filteredData, setFilteredData] = useState(null);
   const [searchField, setSearchField] = useState("");
-  const {user,setUser} = useContext(UserContext);
+  const {user,setUser,getUser} = useContext(UserContext);
 
   function fetchData() {
     const url = 'http://localhost:3000/api/products/';
@@ -18,21 +18,7 @@ export default function AllProductsPage() {
         setProductsData(data)
         setFilteredData(data)
       })
-
   }
-  const getUser =  ()=>{ 
-    const token=localStorage.getItem("token")
-    if(token){
-      FetchKit.FetchUser(token)
-            .then(res=>res.json())
-            .then(data=> {
-              setUser(data)
-              console.log(data)
-          })
-          .then(()=>console.log(user))
-}
-  }
-
   useEffect( () => {
     fetchData()
     getUser()

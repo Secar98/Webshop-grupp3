@@ -9,8 +9,8 @@ export default function UserProfilePage() {
     const[orders,setOrders] = useState(null)
     const[showOrders,setShowOrders] = useState(false)
     
-    const {user,setUser,showEdit, setShowEdit,showProfile,setShowProfile} = useContext(UserContext);
-    console.log(user)
+    const {user,setUser,showEdit, setShowEdit,showProfile,setShowProfile,getUser} = useContext(UserContext);
+    
     useEffect(()=>{
         const token=localStorage.getItem("token")
         if(token){
@@ -29,24 +29,6 @@ export default function UserProfilePage() {
             }
             getUser()
     },[])
-const getUser =  ()=>{ 
-    const url = 'http://localhost:3000/api/users/'
-    const token=localStorage.getItem("token")
-    if(token){
-    fetch(url,{
-              method: "GET",
-              headers:{
-                  "Content-Type":"application/json",
-                  "Authorization": token
-              }
-          })
-          .then(res=>res.json())
-          .then(data=> {
-              setUser(data)
-              console.log(data)
-          })
-        }
-      }
 
     const handleProfile = ()=>{
         setShowProfile (true)
