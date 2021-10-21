@@ -66,7 +66,7 @@ export default function AllProductsPage() {
       {filteredData && (
         <>
           <Navigation />
-          <div className="productsTopBar">
+          <div className="flex p-3">
             <ul>
               <li>
                 <h4 onClick={() => getAllProducts()}>show all</h4>
