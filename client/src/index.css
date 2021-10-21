@@ -57,15 +57,14 @@ a, a:hover{
   text-decoration: none;
 }
 
+.flex{
+  display: flex;
+  justify-content: space-between;
+}
+
 /*
 * FRONT PAGE
 */
-
-.productsTopBar{
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-}
 
 ul{
   display: flex;
@@ -100,12 +99,23 @@ li{
   font-size: 2rem;
 }
 
-.cardDetails{
+.card-footer{
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
+  font-size: 0.8rem;
 }
 
+/*
+* PRODUCT DETAILS
+*/
 
-
+.smallPic{
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  display: flex;
+  flex-direction: column;
+}
 
 
