@@ -6,15 +6,15 @@ import Navigation from '../components/Navigation';
 
 export default function ProductDetailsPage() {
 
+export default function ProductDetailsPage(props) {
   const [productData, setProductData] = useState(null);
   const [pictureData, setPictureData] = useState(null);
   const [largePic, setLargePic] = useState(null);
   let pictures;
 
-  async function fetchData(){
-    const baseUrl = (window.location).href; 
+  async function fetchData() {
+    const baseUrl = (window.location).href;
     const id = baseUrl.substring(baseUrl.lastIndexOf('/') + 1);
-
     const url = 'http://localhost:3000/api/products/';
     const url2 = url + id;
 
@@ -25,11 +25,12 @@ export default function ProductDetailsPage() {
         setPictureData(data.pictures)
         setLargePic(data.pictures.picture1)
       })
+      .catch((err) => console.log(err.message));
   }
 
-  useEffect( () => {
-    fetchData()
-  }, [])
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   if(pictureData){
     pictures = [pictureData.picture1, pictureData.picture2, pictureData.picture3];
@@ -93,4 +94,3 @@ export default function ProductDetailsPage() {
     </>
   )
 }
-

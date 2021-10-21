@@ -1,10 +1,16 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+import React from "react";
+import { Link } from "react-router-dom";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
 
-export default function ProductListItem({product}) {
-  const {pictures, title, price, _id} = product
+export default function ProductListItem(props) {
+  const { pictures, title, price, _id } = props.product;
+
+  const onClickHandler = (e) => {
+    const id = e.target.value;
+    props.onAdd(id);
+  };
+
   return (
     <>
       <Card className="shadow lightText colorBackground m-3">
@@ -13,10 +19,17 @@ export default function ProductListItem({product}) {
           <Card.Title>{title}</Card.Title>
           <div className="flex">
             <Card.Text>{price} SEK</Card.Text>
-            <Button><Link to={`/${_id}`} className="lightText">Go somewhere</Link></Button>
+            <Button>
+              <Link to={`/${_id}`} className="lightText">
+                Go somewhere
+              </Link>
+            </Button>
+            <Button onClick={onClickHandler} value={_id}>
+              Add Product
+            </Button>
           </div>
         </Card.Body>
       </Card>
     </>
-  )
+  );
 }
