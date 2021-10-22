@@ -3,32 +3,30 @@ import {UserContext} from '../context/userContext';
 import { FaUser } from 'react-icons/fa';
 import OrderItem from '../components/OrderItem';
 import Form from '../components/Form';
+import FetchKit from '../utils/fetchKit';
 
 export default function UserProfilePage() {
-    const url = 'http://localhost:3000/api/orders'
     const[orders,setOrders] = useState(null)
     const[showOrders,setShowOrders] = useState(false)
     
     const {user,setUser,showEdit, setShowEdit,showProfile,setShowProfile,getUser} = useContext(UserContext);
-    
+
     useEffect(()=>{
-        const token=localStorage.getItem("token")
-        if(token){
-              fetch(url,{                
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": token
-                }
-              })
-              .then(res => res.json())
+        getOrders()
+        getUser()
+    },[])
+
+    const getOrders = ()=>{ 
+    const token=localStorage.getItem("token")
+    if(token){
+      FetchKit.FetchOrders(token)
+            .then(res => res.json())
               .then(data => {
                 setOrders(data)
                 console.log(data)
               })
             }
-            getUser()
-    },[])
+    }
 
     const handleProfile = ()=>{
         setShowProfile (true)
