@@ -6,7 +6,7 @@ const secretToken = process.env.SECRET_TOKEN;
 const salt = Number(process.env.SALT);
 
 const generateToken = (user) => {
-  return jwt.sign({ data: user }, secretToken, { expiresIn: "30m" });
+  return jwt.sign({ data: user }, secretToken, { expiresIn: "2h" });
 };
 
 const signupUser = async (req, res, next) => {

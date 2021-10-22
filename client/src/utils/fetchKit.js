@@ -22,6 +22,7 @@ export default class FetchKit{
                 "Content-Type": "application/json"
             }, 
             body: JSON.stringify(formData)
+            
         
         })
     }

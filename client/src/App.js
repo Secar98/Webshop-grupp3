@@ -2,10 +2,11 @@ import React, {useState} from 'react'
 import {Switch, Route} from 'react-router-dom'
 import LoginPage from './Pages/LoginPage';
 import RegisterPage from './Pages/RegisterPage';
-import AllProductsPage from './Pages/AllProductsPage';
+import AllProductsPage from './pages/AllProductsPage';
 import {UserContext} from './context/userContext';
 import UserProfilePage from './Pages/UserProfilePage';
 import FetchKit from './utils/fetchKit';
+import ProductDetailsPage from './Pages/ProductDetailsPage';
 
 function App() {
   const [user,setUser] =useState(null)
@@ -25,6 +26,7 @@ function App() {
           .then(()=>console.log(user))
 }
   }
+
   return (
     <div className="container">
       <UserContext.Provider value={{newUser, setNewUser,user,setUser,showEdit,setShowEdit,showProfile,setShowProfile,getUser}}>
@@ -32,6 +34,7 @@ function App() {
           <Route path="/user" component={UserProfilePage}/>
           <Route path="/login" component={LoginPage}/>  
           <Route path="/register" component={RegisterPage}/>  
+          <Route path="/:id" component={ProductDetailsPage}/>
           <Route path="/"><AllProductsPage/></Route>
         </Switch>
       </UserContext.Provider>

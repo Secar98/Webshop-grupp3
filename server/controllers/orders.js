@@ -20,15 +20,26 @@ const getDetailOrder = async (req, res) => {
 };
 
 const addOrder = async (req, res) => {
+    const { products, shipping, totalPrice, deliveryAddress, status } = req.body
+    const user = req.user
 
-    const newOrder = await new Orders (req.body);
+    const order = products.reduce((a, b) => ({amount: a.amount + b.amount}));
+
+    const sum = order.amount += shipping;
+
+    let newObj = {products, shipping, totalPrice, deliveryAddress, status, user}
+
+    newObj = {...newObj, ["totalPrice"]: sum}
+
+    const newOrder = await new Orders (newObj);
     newOrder.save()
+
     .then((order) => {
+
         res.status(201).json(order);
     }).catch((err) => {
         res.status(400).json({ msg: err.message });
       });
-
 }
 
 
