@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Container, ListGroup } from "react-bootstrap";
+import { Button, Container, ListGroup } from "react-bootstrap";
 import Navigation from "../components/Navigation";
+import {useHistory} from "react-router-dom"
 
 const CheckoutPage = () => {
+  const history = useHistory()
   const [productsData, setProductsData] = useState(null);
   //const [sum, setSum] = useState(0);
 
   const fetchData = () => {
     const items = countCart();
-    const products = items.map((item) => {
+    const products = Object.entries(items).map((item) => {
       return item[0];
     });
 
@@ -39,7 +41,7 @@ const CheckoutPage = () => {
         counts[num] = counts[num] ? counts[num] + 1 : 1;
       }
 
-      return Object.entries(counts);
+      return counts;
     }
   };
 
@@ -51,6 +53,30 @@ const CheckoutPage = () => {
   const cartArray = countCart();
   let totalSum = 0;
 
+  const placeOrderOnClick = () =>{
+    const cart = countCart()
+ 
+    const newBody = {
+      totalSum: totalSum, 
+      products: Object.entries(cart)
+    }
+    
+    console.log(JSON.stringify(newBody))
+    fetch("http://localhost:3000/api/orders", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+        "authorization": localStorage.getItem("token")
+      },
+      body: JSON.stringify(newBody),
+    })
+    .then(res => res.json())
+    .then(data =>{
+      localStorage.setItem("Cart", JSON.stringify([]))
+      history.push("/")
+    })
+  }
+
   return (
     <Container>
       <Navigation />
@@ -58,10 +84,10 @@ const CheckoutPage = () => {
 
       {productsData &&
         productsData.map((item, index) => {
-          const amount = cartArray.find((amount) => item._id === amount[0]);
+          const amount = Object.entries(cartArray).find((amount) => item._id === amount[0]);
           const sum = amount[1] * item.price;
           totalSum += sum;
-
+          
           return (
             <>
               <ListGroup class="p-2 bg-light border mt-5" as="ol" numbered>
@@ -78,8 +104,11 @@ const CheckoutPage = () => {
 
       <ListGroup class="p-2 bg-light border mt-5" as="ol" numbered>
         <ListGroup.Item as="li">Total: {totalSum}</ListGroup.Item>
+        <Button onClick={placeOrderOnClick}>place order</Button>
       </ListGroup>
+      
     </Container>
+
   );
 };
 

@@ -1,4 +1,6 @@
 const Orders = require("../models/OrdersModel");
+const User = require("../models/UsersModel");
+const Products = require("../models/ProductsModel");
 
 const getAllOrders = async (req, res) => {
     try {
@@ -20,18 +22,36 @@ const getDetailOrder = async (req, res) => {
 };
 
 const addOrder = async (req, res) => {
-    const { products, shipping, totalPrice, deliveryAddress, status } = req.body
+    const {products, totalSum} = req.body
+    const futureProduct = products.map(function(x) {
+        return {    
+            "amount": x[1],
+            "product": x[0],
+        }
+    })
+    
+
     const user = req.user
+    const newProduct = []
+    products.map(item => newProduct.push(item[0]))
+    const userData = await User.findById(user)
+    
+    const productsData = await Products.find({ '_id': { $in: newProduct }})
+    const shipping = 50; 
 
-    const order = products.reduce((a, b) => ({amount: a.amount + b.amount}));
+    let total = shipping; 
+    products.map(item =>{
+    
+        const current = productsData.find(product => item[0] == product._id)
+        total += current.price* item[1]
+    })
+    const {deliveryAddress} = userData
+    const status = "not send";
 
-    const sum = order.amount += shipping;
-
-    let newObj = {products, shipping, totalPrice, deliveryAddress, status, user}
-
-    newObj = {...newObj, ["totalPrice"]: sum}
+    let newObj = {products: futureProduct, shipping, totalPrice: total, deliveryAddress, status, user}
 
     const newOrder = await new Orders (newObj);
+    console.log(futureProduct)
     newOrder.save()
 
     .then((order) => {
