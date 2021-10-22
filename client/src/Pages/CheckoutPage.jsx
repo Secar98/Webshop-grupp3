@@ -4,6 +4,7 @@ import Navigation from "../components/Navigation";
 
 const CheckoutPage = () => {
   const [productsData, setProductsData] = useState(null);
+  //const [sum, setSum] = useState(0);
 
   const fetchData = () => {
     const items = countCart();
@@ -42,10 +43,25 @@ const CheckoutPage = () => {
     }
   };
 
+  const totalSum = () => {
+    const cart = countCart();
+    //const sum = productsData.map((item, index) => {
+    for (const amount of cart) {
+      const sum = productsData.map((item) => {
+        let totalSum;
+        totalSum += item.price * amount[0];
+        return totalSum;
+      });
+      console.log(sum);
+    }
+  };
+
   useEffect(() => {
     fetchData();
     countCart();
+    totalSum();
   }, []);
+
   const cartArray = countCart();
 
   return (
@@ -54,19 +70,16 @@ const CheckoutPage = () => {
       <h1 class="mt-5">Du är på checkoutPage</h1>
 
       {productsData &&
-        cartArray &&
-        cartArray.map((item, index) => {
-          const testProd = productsData.find(
-            (product) => product._id === item[0]
-          );
-          const sum = Number(testProd.price * item[1]);
+        productsData.map((item, index) => {
+          const amount = cartArray.find((amount) => item._id === amount[0]);
+          const sum = amount[1] * item.price;
           return (
             <>
               <ListGroup class="p-2 bg-light border mt-5" as="ol" numbered>
                 <ListGroup.Item as="li">
-                  <p>Title: {testProd.title}</p>
-                  <p>Price: {testProd.price}</p>
-                  <p>Amount: {item[1]}</p>
+                  <p>Title: {item.title}</p>
+                  <p>Price: {item.price}</p>
+                  <p>Amount: {amount[1]}</p>
                   <b class="bald">sum: {sum}</b>
                 </ListGroup.Item>
               </ListGroup>
@@ -75,7 +88,7 @@ const CheckoutPage = () => {
         })}
 
       <ListGroup class="p-2 bg-light border mt-5" as="ol" numbered>
-        <ListGroup.Item as="li"></ListGroup.Item>
+        {/* <ListGroup.Item as="li">Total: {sum}</ListGroup.Item> */}
       </ListGroup>
     </Container>
   );
