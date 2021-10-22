@@ -43,26 +43,13 @@ const CheckoutPage = () => {
     }
   };
 
-  const totalSum = () => {
-    const cart = countCart();
-    //const sum = productsData.map((item, index) => {
-    for (const amount of cart) {
-      const sum = productsData.map((item) => {
-        let totalSum;
-        totalSum += item.price * amount[0];
-        return totalSum;
-      });
-      console.log(sum);
-    }
-  };
-
   useEffect(() => {
     fetchData();
     countCart();
-    totalSum();
   }, []);
 
   const cartArray = countCart();
+  let totalSum = 0;
 
   return (
     <Container>
@@ -73,6 +60,8 @@ const CheckoutPage = () => {
         productsData.map((item, index) => {
           const amount = cartArray.find((amount) => item._id === amount[0]);
           const sum = amount[1] * item.price;
+          totalSum += sum;
+
           return (
             <>
               <ListGroup class="p-2 bg-light border mt-5" as="ol" numbered>
@@ -88,7 +77,7 @@ const CheckoutPage = () => {
         })}
 
       <ListGroup class="p-2 bg-light border mt-5" as="ol" numbered>
-        {/* <ListGroup.Item as="li">Total: {sum}</ListGroup.Item> */}
+        <ListGroup.Item as="li">Total: {totalSum}</ListGroup.Item>
       </ListGroup>
     </Container>
   );
