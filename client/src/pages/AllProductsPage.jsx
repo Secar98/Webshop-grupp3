@@ -48,8 +48,11 @@ export default function AllProductsPage() {
   const result =
     searchField &&
     filteredData.filter((product) => {
-      return product.title === searchField;
-    });
+      return (
+        product.title.includes(searchField)
+      )
+    }
+    )
 
   const handleChange = (e) => {
     setSearchField(e.target.value);
