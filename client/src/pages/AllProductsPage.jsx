@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useContext} from 'react';
+import ProductListItem from '../components/ProductListItem';
+import {UserContext} from '../context/userContext';
+import FetchKit from '../utils/fetchKit';
 import Navigation from "../components/Navigation";
-import ProductListItem from "../components/ProductListItem";
+
 
 export default function AllProductsPage() {
   const [productsData, setProductsData] = useState(null);
   const [filteredData, setFilteredData] = useState(null);
   const [searchField, setSearchField] = useState("");
   const [cart, setCart] = useState([]);
+  
+  const {user,setUser,getUser} = useContext(UserContext);
 
   const fetchData = () => {
     const url = "http://localhost:3000/api/products/";
@@ -29,6 +34,7 @@ export default function AllProductsPage() {
   useEffect(() => {
     countCart(cart);
     fetchData();
+     getUser()
   }, [cart]);
 
   //sorting function, takes category as a parameter, returns products in that category.

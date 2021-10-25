@@ -26,4 +26,42 @@ export default class FetchKit{
         
         })
     }
+    static FetchUser = (token )=>{
+        const url = 'http://localhost:3000/api/users/'
+        return fetch(url,{
+              method: "GET",
+              headers:{
+                  "Content-Type":"application/json",
+                  "Authorization": token
+              }
+          })
+        }
+
+    static editFetch = (formData,token,id) => {
+
+        const url = `http://localhost:3000/api/users/${id}`
+
+        return fetch(url, {
+            method: "POST", 
+            headers:{
+                "Content-Type": "application/json",
+                "Authorization": token
+            }, 
+            body: JSON.stringify(formData)
+        
+        })
+    }
+
+        static FetchOrders = (token) => {
+
+        const url = 'http://localhost:3000/api/orders'
+
+        return fetch(url,{                
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": token
+                }
+              })
+    }   
 }
