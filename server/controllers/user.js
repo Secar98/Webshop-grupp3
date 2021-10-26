@@ -89,4 +89,9 @@ const updateUser = (req, res, next) => {
   }
 };
 
-module.exports = { signupUser, signInUser, getUser, updateUser };
+const validateJWT = (req, res) => {
+  const { id } = req.user;
+  res.json({ token: generateToken(id) })
+};
+
+module.exports = { signupUser, signInUser, getUser, updateUser, validateJWT };
