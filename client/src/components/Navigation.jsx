@@ -30,17 +30,17 @@ export default function Navigation() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             {!loggedIn ? 
-              <Nav.Link href="/login">Login</Nav.Link>
+              <>
+                <Nav.Link href="/login">Login</Nav.Link>
+                <Nav.Link href="/register">Register</Nav.Link>
+              </>
               : 
               <>
                 <Nav.Link onClick={logOut}>Log out</Nav.Link>
                 <Nav.Link onClick={goToUserProfile}>User</Nav.Link>
+                <Nav.Link href="/checkout">Cart</Nav.Link>
               </>
             }
-
-            <Nav.Link href="/register">Register</Nav.Link>
-            <Nav.Link href="/checkout">Cart</Nav.Link>
-            
           </Nav>
         </Navbar.Collapse>
       </Container>
