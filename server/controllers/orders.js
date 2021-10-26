@@ -3,11 +3,13 @@ const User = require("../models/UsersModel");
 const Products = require("../models/ProductsModel");
 
 const getAllOrders = async (req, res) => {
+    const id = req.user;
     try {
-        const allOrders = await Orders.find();
+        const allOrders = await Orders.find({user:id});
+
         res.status(200).json(allOrders);
     } catch (err) {
-        res.status(404).json({ massage: err.message });
+        res.status(404).json({ message: err.message });
     }
 };
 
