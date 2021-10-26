@@ -30,7 +30,7 @@ export default function Navigation() {
             }
 
             <Nav.Link href="/register">Register</Nav.Link>
-            <Nav.Link href="#cart">Cart</Nav.Link>
+            <Nav.Link href="/checkout">Cart</Nav.Link>
             
           </Nav>
         </Navbar.Collapse>

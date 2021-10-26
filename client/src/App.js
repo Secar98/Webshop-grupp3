@@ -7,6 +7,7 @@ import {UserContext} from './context/userContext';
 import UserProfilePage from './Pages/UserProfilePage';
 import FetchKit from './utils/fetchKit';
 import ProductDetailsPage from './Pages/ProductDetailsPage';
+import CheckoutPage from "./Pages/CheckoutPage";
 
 function App() {
   const [user,setUser] =useState(null)
@@ -31,6 +32,7 @@ function App() {
     <div className="container">
       <UserContext.Provider value={{newUser, setNewUser,user,setUser,showEdit,setShowEdit,showProfile,setShowProfile,getUser}}>
         <Switch>
+          <Route path="/checkout" component={CheckoutPage} />
           <Route path="/user" component={UserProfilePage}/>
           <Route path="/login" component={LoginPage}/>  
           <Route path="/register" component={RegisterPage}/>  
