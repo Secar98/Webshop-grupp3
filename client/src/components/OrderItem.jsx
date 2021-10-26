@@ -1,6 +1,6 @@
 import React,{ useState } from 'react'
 
-export default function OrderItem({_id,status,totalPrice}) {
+export default function OrderItem({_id,status,totalPrice,createdAt}) {
 
         const [orderItem,setOrderItem] = useState(false)
         
@@ -17,6 +17,10 @@ export default function OrderItem({_id,status,totalPrice}) {
                     <tr>
                         <th>Total Price</th>
                         <th>{totalPrice} SEK</th>
+                    </tr>
+                    <tr>
+                        <th>created At</th>
+                        <th>{createdAt.toString().split('T')[0]}</th>
                     </tr>
                 </tbody>
             </table>
