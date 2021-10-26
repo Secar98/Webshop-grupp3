@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {Switch, Route} from 'react-router-dom'
 import LoginPage from './Pages/LoginPage';
 import RegisterPage from './Pages/RegisterPage';
-import AllProductsPage from './pages/AllProductsPage';
+import AllProductsPage from './Pages/AllProductsPage';
 import {UserContext} from './context/userContext';
 import UserProfilePage from './Pages/UserProfilePage';
 import FetchKit from './utils/fetchKit';

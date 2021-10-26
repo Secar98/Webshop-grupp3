@@ -31,7 +31,6 @@ export default function AllProductsPage() {
   useEffect(() => {
     setCartLocalStorage(cart);
     fetchData();
-     getUser()
   }, [cart]);
 
   //sorting function, takes category as a parameter, returns products in that category.
