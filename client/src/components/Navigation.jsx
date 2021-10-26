@@ -5,6 +5,17 @@ import Nav from 'react-bootstrap/Nav';
 
 
 export default function Navigation() {
+  let loggedIn = false;
+
+  if(localStorage.getItem("token")){
+    loggedIn = true;
+  };
+
+  function logOut(){
+    localStorage.removeItem("token");
+    window.location.reload();
+  };
+
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -12,7 +23,12 @@ export default function Navigation() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/login">Login</Nav.Link>
+            {!loggedIn ? 
+              <Nav.Link href="/login">Login</Nav.Link>
+              : 
+              <Nav.Link onClick={logOut}>Log out</Nav.Link>
+            }
+
             <Nav.Link href="/register">Register</Nav.Link>
             <Nav.Link href="#cart">Cart</Nav.Link>
             
