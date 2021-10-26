@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Switch, Route} from 'react-router-dom'
 import LoginPage from './Pages/LoginPage';
 import RegisterPage from './Pages/RegisterPage';
@@ -8,13 +8,15 @@ import UserProfilePage from './Pages/UserProfilePage';
 import FetchKit from './utils/fetchKit';
 import ProductDetailsPage from './Pages/ProductDetailsPage';
 import CheckoutPage from "./Pages/CheckoutPage";
+import validateJWT from "./utils/auth"
+import ProtectedRoutes from './components/ProtectedRoutes';
 
 function App() {
   const [user,setUser] =useState(null)
-  const [newUser, setNewUser] = useState(Boolean)
+  const [validToken,setValidToken] =useState(null)
   const[showEdit,setShowEdit] = useState(false)
   const[showProfile,setShowProfile] = useState(true)
-
+  
   const getUser =  ()=>{ 
     const token=localStorage.getItem("token")
     if(token){
@@ -22,18 +24,18 @@ function App() {
             .then(res=>res.json())
             .then(data=> {
               setUser(data)
-              console.log(data)
           })
           .then(()=>console.log(user))
-}
+        }
   }
+  
 
   return (
     <div className="container">
-      <UserContext.Provider value={{newUser, setNewUser,user,setUser,showEdit,setShowEdit,showProfile,setShowProfile,getUser}}>
+      <UserContext.Provider value={{user,setUser,showEdit,setShowEdit,showProfile,setShowProfile,getUser, validToken,setValidToken}}>
         <Switch>
-          <Route path="/checkout" component={CheckoutPage} />
-          <Route path="/user" component={UserProfilePage}/>
+          <ProtectedRoutes  path="/user" component={UserProfilePage}/>
+          <ProtectedRoutes path="/checkout" component={CheckoutPage}/>
           <Route path="/login" component={LoginPage}/>  
           <Route path="/register" component={RegisterPage}/>  
           <Route path="/:id" component={ProductDetailsPage}/>

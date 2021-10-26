@@ -5,33 +5,31 @@ import { UserContext } from "../context/userContext";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Navigation from "../components/Navigation";
+import Auth from "../utils/auth"
 
 export default function LoginPage() {
   const history = useHistory();
-  const { setNewUser, newUser } = useContext(UserContext);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    /* const token = localStorage.getItem("token");
     if (token && token !== "undefined") {
       history.push("/");
-    }
+    } */
   }, [history]);
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
 
     FetchKit.loginFetch(formData)
-      .then((res) => res.json())
-      .then((item) => {
-        if (item) {
-          localStorage.setItem("token", item.token);
-          history.push("/");
-        }
-      });
+    .then(res => res.json())
+    .then(item =>{
+      localStorage.setItem("token", item.token);
+      history.push("/")
+    })
   };
 
   const handleOnChange = (e) => {
@@ -68,7 +66,6 @@ export default function LoginPage() {
           </Form.Group>
           <input className="btn lightText" type="submit" value="login" />
         </Form>
-        {newUser && <p>Ny användare</p>}
       </Col>
     </>
   );
