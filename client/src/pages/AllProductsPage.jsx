@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useContext} from 'react';
+import ProductListItem from '../components/ProductListItem';
+import {UserContext} from '../context/userContext';
+import FetchKit from '../utils/fetchKit';
 import Navigation from "../components/Navigation";
-import ProductListItem from "../components/ProductListItem";
+
 
 export default function AllProductsPage() {
   const [productsData, setProductsData] = useState(null);
@@ -9,6 +12,7 @@ export default function AllProductsPage() {
 
   const oldCart = JSON.parse(localStorage.getItem("Cart"));
   const [cart, setCart] = useState(oldCart || []);
+
 
   const fetchData = () => {
     const url = "http://localhost:3000/api/products/";
@@ -27,6 +31,7 @@ export default function AllProductsPage() {
   useEffect(() => {
     setCartLocalStorage(cart);
     fetchData();
+     getUser()
   }, [cart]);
 
   //sorting function, takes category as a parameter, returns products in that category.
@@ -46,8 +51,11 @@ export default function AllProductsPage() {
   const result =
     searchField &&
     filteredData.filter((product) => {
-      return product.title === searchField;
-    });
+      return (
+        product.title.includes(searchField)
+      )
+    }
+    )
 
   const handleChange = (e) => {
     setSearchField(e.target.value);
@@ -64,7 +72,7 @@ export default function AllProductsPage() {
       {filteredData && (
         <>
           <Navigation />
-          <div className="productsTopBar">
+          <div className="flex p-3">
             <ul>
               <li>
                 <h4 onClick={() => getAllProducts()}>show all</h4>
