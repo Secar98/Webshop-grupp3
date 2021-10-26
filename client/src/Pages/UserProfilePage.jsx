@@ -4,6 +4,7 @@ import { FaUser } from 'react-icons/fa';
 import OrderItem from '../components/OrderItem';
 import Form from '../components/Form';
 import FetchKit from '../utils/fetchKit';
+import Navigation from '../components/Navigation';
 
 export default function UserProfilePage() {
     const[orders,setOrders] = useState(null)
@@ -43,68 +44,71 @@ export default function UserProfilePage() {
         setShowEdit(true)
         setShowOrders (false)
     }
-    return (
-        <div className="row">
-            
-            <div className="col-md-3 border rounded">
-                <div>
-                    <FaUser style={{fontSize: '7rem'}} />
-                    <h2>Name</h2>
-                </div>
-                <div>
-                <h4 onClick={handleProfile}>My profile</h4>      
-                <h4 onClick={handleOrder}>My Orders</h4>      
-                </div>
-            </div>
-            {(showProfile && user) &&
-                <div className="col-md-8 border rounded m-3">
-                    <h1>My Profile</h1>      
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>Name</td>
-                                <th>{user.fullName}</th>
-                            </tr>
-                            <tr>
-                                <td>Email</td>
-                                <th>{user.email}</th>
-                            </tr>
-                            <tr >
-                                <td >Delivery adress</td>
-                                <th>
-                                    {user.deliveryAddress.streetAddress},
-                                    {user.deliveryAddress.city},
-                                    {user.deliveryAddress.postalCode}
-                                
-                                </th>
-                            </tr>               
-                            <tr>
-                                <td>Phone number</td>
-                                <th>{user.phoneNumber}</th>
-                            </tr>               
-                        </tbody>
-                    </table>
-                    <button onClick ={handleEdit}>Edit</button>
-                </div>
-            }
-            {(showEdit && user) &&
-                <Form {...user}/>
-            }
-            {(showOrders && orders) &&
-                <div className="col-md-8 border rounded m-3">
-                    <h1>My Orders</h1> 
-                    {orders.map (order =>{
-                        return(
-                            <>
-                                <OrderItem key ={order._id} {...order}/>
-                            </>
-                            )
+    return (  
+        <>
+          <Navigation/>
+          <div className="row">
+              
+              <div className="col-md-3 border rounded">
+                  <div>
+                      <FaUser style={{fontSize: '7rem'}} />
+                      <h2>Name</h2>
+                  </div>
+                  <div>
+                  <h4 onClick={handleProfile}>My profile</h4>      
+                  <h4 onClick={handleOrder}>My Orders</h4>      
+                  </div>
+              </div>
+              {(showProfile && user) &&
+                  <div className="col-md-8 border rounded m-3">
+                      <h1>My Profile</h1>      
+                      <table>
+                          <tbody>
+                              <tr>
+                                  <td>Name</td>
+                                  <th>{user.fullName}</th>
+                              </tr>
+                              <tr>
+                                  <td>Email</td>
+                                  <th>{user.email}</th>
+                              </tr>
+                              <tr >
+                                  <td >Delivery adress</td>
+                                  <th>
+                                      {user.deliveryAddress.streetAddress},
+                                      {user.deliveryAddress.city},
+                                      {user.deliveryAddress.postalCode}
+                                  
+                                  </th>
+                              </tr>               
+                              <tr>
+                                  <td>Phone number</td>
+                                  <th>{user.phoneNumber}</th>
+                              </tr>               
+                          </tbody>
+                      </table>
+                      <button onClick ={handleEdit}>Edit</button>
+                  </div>
+              }
+              {(showEdit && user) &&
+                  <Form {...user}/>
+              }
+              {(showOrders && orders) &&
+                  <div className="col-md-8 border rounded m-3">
+                      <h1>My Orders</h1> 
+                      {orders.map (order =>{
+                          return(
+                              <>
+                                  <OrderItem key ={order._id} {...order}/>
+                              </>
+                              )
 
-                        })}
-                    </div>
-                    
-            }
-            
-        </div>
+                          })}
+                      </div>
+                      
+              }
+              
+          </div>
+        </>
     )
 }
