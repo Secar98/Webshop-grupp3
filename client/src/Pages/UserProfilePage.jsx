@@ -1,4 +1,5 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useState, useEffect, useContext} from 'react';
+import { Redirect } from 'react-router-dom';
 import {UserContext} from '../context/userContext';
 import { FaUser } from 'react-icons/fa';
 import OrderItem from '../components/OrderItem';
@@ -18,6 +19,13 @@ export default function UserProfilePage() {
         getOrders()
         getUser()
     },[])
+
+    let loggedIn = false;
+
+    if(localStorage.getItem("token")){
+        loggedIn = true;
+    };
+
 
     const getOrders = ()=>{ 
     const token=localStorage.getItem("token")
@@ -49,68 +57,72 @@ export default function UserProfilePage() {
     return (
       <>
         <Navigation />
-        <div className="row">
-          <div className="col-md-3 m-3 colorBackground lightText shadow">
-            <div className="center">
-                <div className="profilePic p-3 m-3">    
-                    <FaUser style={{ fontSize: "7rem" }} />
+        {loggedIn ? (
+          <div className="row">
+            <div className="col-md-3 m-3 colorBackground lightText shadow">
+              <div className="center">
+                <div className="profilePic p-3 m-3">
+                  <FaUser style={{ fontSize: "7rem" }} />
                 </div>
-                {user &&
-                    <h2>Name: {user.fullName}</h2>
-                }
+                {user && <h2>Name: {user.fullName}</h2>}
+              </div>
+              <div className="profileItems p-3">
+                <Button onClick={handleProfile}>My profile</Button>
+                <Button onClick={handleOrder}>My Orders</Button>
+              </div>
             </div>
-            <div className="profileItems p-3">
-              <Button onClick={handleProfile}>My profile</Button>
-              <Button onClick={handleOrder}>My Orders</Button>
-            </div>
-          </div>
             <Card className="col-md-8 p-3 m-3 shadow">
-          {showProfile && user && (
-              <>
-              <Card.Title>My Profile</Card.Title>
-              <table>
-                <tbody>
-                  <tr>
-                    <td>Name</td>
-                    <th>{user.fullName}</th>
-                  </tr>
-                  <tr>
-                    <td>Email</td>
-                    <th>{user.email}</th>
-                  </tr>
-                  <tr>
-                    <td>Phone number</td>
-                    <th>{user.phoneNumber}</th>
-                  </tr>
-                  <tr>
-                    <td className="align-text-top">Delivery adress</td>
-                    <th>
-                      {user.deliveryAddress.streetAddress} <br />
-                      {user.deliveryAddress.city} <br />
-                      {user.deliveryAddress.postalCode}
-                    </th>
-                  </tr>
-                </tbody>
-              </table>
-              <Button className="editBtn m-3" onClick={handleEdit}>Edit</Button>
-              </>
-          )}
-          {showEdit && user && <Form {...user} />}
-          
-          {showOrders && orders && (
-              <>
-              <Card.Title>My Orders</Card.Title>
-              {orders.map((order) => {
-                return (
-                  <>
-                    <OrderItem key={order._id} {...order} />
-                  </>
-                );
-              })}
-              </>
-          )}
+              {showProfile && user && (
+                <>
+                  <Card.Title>My Profile</Card.Title>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>Name</td>
+                        <th>{user.fullName}</th>
+                      </tr>
+                      <tr>
+                        <td>Email</td>
+                        <th>{user.email}</th>
+                      </tr>
+                      <tr>
+                        <td>Phone number</td>
+                        <th>{user.phoneNumber}</th>
+                      </tr>
+                      <tr>
+                        <td className="align-text-top">Delivery adress</td>
+                        <th>
+                          {user.deliveryAddress.streetAddress} <br />
+                          {user.deliveryAddress.city} <br />
+                          {user.deliveryAddress.postalCode}
+                        </th>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <Button className="editBtn m-3" onClick={handleEdit}>
+                    Edit
+                  </Button>
+                </>
+              )}
+              {showEdit && user && <Form {...user} />}
+
+              {showOrders && orders && (
+                <>
+                  <Card.Title>My Orders</Card.Title>
+                  {orders.map((order) => {
+                    return (
+                      <>
+                        <OrderItem key={order._id} {...order} />
+                      </>
+                    );
+                  })}
+                </>
+              )}
             </Card>
-        </div>
+          </div>
+        ) : (
+          <Redirect to="/login" />
+        )}
       </>
     );
 }
