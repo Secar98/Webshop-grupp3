@@ -1,56 +1,56 @@
-export default class FetchKit{
+export default class FetchKit {
     static loginFetch = (formData) => {
-        const url = "http://localhost:3000/api/users/signin" 
+        const url = "http://localhost:3000/api/users/signin"
 
         return fetch(url, {
-            method: "POST", 
-            headers:{
-                "accept": "application/json", 
+            method: "POST",
+            headers: {
+                "accept": "application/json",
                 "Content-Type": "application/json"
-            }, 
+            },
             body: JSON.stringify(formData)
-        
+
         })
     }
 
     static registerFetch = (formData) => {
-        const url = "http://localhost:3000/api/users/signup" 
+        const url = "http://localhost:3000/api/users/signup"
 
         return fetch(url, {
-            method: "POST", 
-            headers:{
-                "accept": "application/json", 
+            method: "POST",
+            headers: {
+                "accept": "application/json",
                 "Content-Type": "application/json"
-            }, 
+            },
             body: JSON.stringify(formData)
-            
-        
+
+
         })
     }
 
-    static FetchUser = (token )=>{
+    static FetchUser = (token) => {
         const url = 'http://localhost:3000/api/users/'
-        return fetch(url,{
+        return fetch(url, {
             method: "GET",
-            headers:{
-                "Content-Type":"application/json",
+            headers: {
+                "Content-Type": "application/json",
                 "Authorization": token
             }
         })
     }
 
-    static editFetch = (formData,token,id) => {
+    static editFetch = (formData, token, id) => {
 
         const url = `http://localhost:3000/api/users/${id}`
 
         return fetch(url, {
-            method: "POST", 
-            headers:{
+            method: "POST",
+            headers: {
                 "Content-Type": "application/json",
                 "Authorization": token
-            }, 
+            },
             body: JSON.stringify(formData)
-        
+
         })
     }
 
@@ -58,23 +58,33 @@ export default class FetchKit{
 
         const url = 'http://localhost:3000/api/orders'
 
-        return fetch(url,{                
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": token
-                }
-              })
-    }
-
-    static validateJWTFetch = (token) => {
-        const url = 'http://localhost:3000/api/users/jwt-valid'
-        return fetch(url,{                
+        return fetch(url, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": token
             }
+        })
+    }
+
+    static validateJWTFetch = (token) => {
+        const url = 'http://localhost:3000/api/users/jwt-valid'
+        return fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": token
+            }
+        })
+    }
+
+    static fetchCheckoutPage = (body) => {
+        return fetch("http://localhost:3000/api/products/checkout", {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+            },
+            body: JSON.stringify(body),
         })
     }
 }

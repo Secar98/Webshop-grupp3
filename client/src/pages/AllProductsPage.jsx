@@ -77,8 +77,7 @@ export default function AllProductsPage() {
   const setCartToLocalstorage = (cart) =>{
     localStorage.setItem("cart", JSON.stringify(cart))
   }
-  
-  console.log(cart)
+
 
   return (
     <div>
