@@ -6,7 +6,6 @@ import {useHistory} from "react-router-dom"
 const CheckoutPage = () => {
   const history = useHistory()
   const [productsData, setProductsData] = useState(null);
-  //const [sum, setSum] = useState(0);
 
   const fetchData = () => {
     const items = countCart();
