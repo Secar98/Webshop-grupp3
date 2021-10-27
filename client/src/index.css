@@ -143,3 +143,14 @@ td a {
 td a:hover {
   color: #fca311;
 }
+
+/*
+* CHECKOUT PAGE
+*/
+
+.checkoutItem{
+  background: #F6F6F6;
+  color: #14213D;
+}
+
+
