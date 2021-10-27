@@ -10,7 +10,7 @@ export default function AllProductsPage() {
   const [filteredData, setFilteredData] = useState(null);
   const [searchField, setSearchField] = useState("");
 
-  const oldCart = JSON.parse(localStorage.getItem("Cart"));
+  const oldCart = JSON.parse(localStorage.getItem("cart"));
   const [cart, setCart] = useState(oldCart || []);
 
 
@@ -24,14 +24,11 @@ export default function AllProductsPage() {
       });
   };
 
-  // const setCartLocalStorage = (cart) => {
-  //   localStorage.setItem("Cart", JSON.stringify(cart));
-  // };
-
   useEffect(() => {
-    // setCartLocalStorage(cart);
+
+    setCartToLocalstorage(cart);
     fetchData();
-  }, []);
+  }, [cart]);
 
   //sorting function, takes category as a parameter, returns products in that category.
   function getProductsByCategory(category) {
@@ -61,20 +58,27 @@ export default function AllProductsPage() {
   };
 
   const onAddHandler = (id) => {
-    const oldCart = cart.find(item => item.id === id);
-    if(!oldCart) {
-      setCart((prevArray) => [...prevArray, { id: id, amount: 1 }]);
+
+    const checkIfCart = cart.find(item => item.id === id);
+    if(!checkIfCart) {
+      setCart(prevCart => [...prevCart, {id: id, amount: 1}]);
+
     } else {
-      Object.values(oldCart).map(item => {
-        console.log(item);
-        if(id === item[0]) {
-          setCart((prevArray) => [...prevArray, { id: id, amount: item[1] + 1 }]);
+      cart.map((item, index )=>{
+        if(item.id === id){
+          const newArr = [...cart]
+          newArr[index] = {id: id, amount: ++item.amount}
+          setCart(newArr)
         }
       })
     }
   };
 
-  console.log(cart);
+  const setCartToLocalstorage = (cart) =>{
+    localStorage.setItem("cart", JSON.stringify(cart))
+  }
+  
+  console.log(cart)
 
   return (
     <div>
