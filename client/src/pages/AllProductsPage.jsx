@@ -24,14 +24,14 @@ export default function AllProductsPage() {
       });
   };
 
-  const setCartLocalStorage = (cart) => {
-    localStorage.setItem("Cart", JSON.stringify(cart));
-  };
+  // const setCartLocalStorage = (cart) => {
+  //   localStorage.setItem("Cart", JSON.stringify(cart));
+  // };
 
   useEffect(() => {
-    setCartLocalStorage(cart);
+    // setCartLocalStorage(cart);
     fetchData();
-  }, [cart]);
+  }, []);
 
   //sorting function, takes category as a parameter, returns products in that category.
   function getProductsByCategory(category) {
@@ -61,8 +61,20 @@ export default function AllProductsPage() {
   };
 
   const onAddHandler = (id) => {
-    setCart((prevArray) => [...prevArray, id]);
+    const oldCart = cart.find(item => item.id === id);
+    if(!oldCart) {
+      setCart((prevArray) => [...prevArray, { id: id, amount: 1 }]);
+    } else {
+      Object.values(oldCart).map(item => {
+        console.log(item);
+        if(id === item[0]) {
+          setCart((prevArray) => [...prevArray, { id: id, amount: item[1] + 1 }]);
+        }
+      })
+    }
   };
+
+  console.log(cart);
 
   return (
     <div>
