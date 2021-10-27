@@ -1,6 +1,9 @@
 # Projekt 2 - Webshop - Backend 3
 
-## Ett MERN project
+## MERN projeKt - 2021-10-27
+
+\
+![drawing](pic/mern-stack.jpg)
 
 | Deltagare Grupp3  |
 | ----------------- |
