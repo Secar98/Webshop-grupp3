@@ -1,7 +1,8 @@
 import React,{ useState } from 'react';
+import {Link} from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 
-export default function OrderItem({_id,status,totalPrice,createdAt}) {
+export default function OrderItem({_id,status,totalPrice,createdAt,products}) {
 
         const [orderItem,setOrderItem] = useState(false)
         
@@ -9,7 +10,25 @@ export default function OrderItem({_id,status,totalPrice,createdAt}) {
         <div className="m-2">
             <Button onClick = {()=>setOrderItem(!orderItem)}>Order Id : {_id}</Button>
             {orderItem && 
-                <table>
+            <>
+              <table>
+                <thead>
+                  <th>Product title:</th>
+                  <th>Product quantity:</th>
+                </thead>
+                <tbody>
+                  {products.map((item, index) => {
+                    return (
+                        <tr>
+                          <td><Link to={`/${item.product._id}`}>{item.product.title}</Link></td>
+                          <td>{item.amount}</td>
+                        </tr>                
+                    )
+                  })}
+                </tbody>
+              </table>
+
+              <table>
                 <tbody>
                     <tr>
                         <th>Status:</th>
@@ -24,7 +43,8 @@ export default function OrderItem({_id,status,totalPrice,createdAt}) {
                         <th>{createdAt.toString().split('T')[0]}</th>
                     </tr>
                 </tbody>
-            </table>
+              </table>
+            </>
             }
         </div>
     )

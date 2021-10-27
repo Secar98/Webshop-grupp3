@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Raleway&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lobster&family=Raleway&display=swap");
 
-body {  
-  margin: 0;
-  font-family: 'Raleway', sans-serif;
-  color: #14213D;
-  background-color: #E5E5E5;
+body {
+	margin: 0;
+	font-family: "Raleway", sans-serif;
+	color: #14213d;
+	background-color: #e5e5e5;
 }
 
 /*Navbar custom styling*/
@@ -27,41 +27,41 @@ body {
 
 .navbar .navbar-nav .nav-link:hover {
 	color: #fca311;
-} 
-
+}
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Lobster', cursive;
 }
 
-.lightText{
-  color: #F6F6F6;
+.lightText {
+	color: #f6f6f6;
 }
 
-.colorBackground{
-  background-color: #A47C84;
-  border: none;
+.colorBackground {
+	background-color: #a47c84;
+	border: none;
 }
 
-.btn{
-  background: #FCA311;
-  border: none;
-  border-radius: 10px;
+.btn {
+	background: #fca311;
+	border: none;
+	border-radius: 10px;
 }
 
-.btn:hover{
-  background: #14213D;
-  color: #F6F6F6;
+.btn:hover {
+	background: #14213d;
+	color: #f6f6f6;
 }
 
-a, a:hover{
-  color: #F6F6F6;
-  text-decoration: none;
+a,
+a:hover {
+	color: #f6f6f6;
+	text-decoration: none;
 }
 
-.flex{
-  display: flex;
-  justify-content: space-between;
+.flex {
+	display: flex;
+	justify-content: space-between;
 }
 
 .center{
@@ -74,56 +74,76 @@ a, a:hover{
 * FRONT PAGE
 */
 
-ul{
-  display: flex;
-  flex-direction: row;
+ul {
+	display: flex;
+	flex-direction: row;
 }
 
-li{
-  list-style: none;
-  padding: 0 15px;
-  cursor: pointer;
+li {
+	list-style: none;
+	padding: 0 15px;
+	cursor: pointer;
 }
 
-.search{
-  height: fit-content;
+.search {
+	height: fit-content;
 }
 
 /* 
 * CARDS
 */
 
-.card-body{
-  padding-top: 0;
+.card-body {
+	padding-top: 0;
 }
 
-.card-img-top{
-  height: 300px;
-  object-fit: cover;
+.card-img-top {
+	height: 300px;
+	object-fit: cover;
 }
 
-.card-title{
-  font-family: 'Lobster', cursive;
-  font-size: 2rem;
+.card-title {
+	font-family: "Lobster", cursive;
+	font-size: 2rem;
 }
 
-.card-footer{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  font-size: 0.8rem;
+.card-footer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	font-size: 0.8rem;
 }
 
 /*
 * PRODUCT DETAILS
 */
 
-.smallPic{
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  display: flex;
-  flex-direction: column;
+.smallPic {
+	width: 100px;
+	height: 100px;
+	object-fit: cover;
+	display: flex;
+	flex-direction: column;
+}
+
+/*user -> order -> table styling */
+
+table,
+th,
+td {
+	border: 1px solid black;
+}
+
+table {
+	width: 100%;
+}
+
+td a {
+	color: #14213d;
+}
+
+td a:hover {
+  color: #fca311;
 }
 
 /*
