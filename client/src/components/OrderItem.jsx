@@ -1,6 +1,7 @@
-import React,{ useState } from 'react'
+import React,{ useState } from 'react';
+import {Link} from 'react-router-dom';
 
-export default function OrderItem({_id,status,totalPrice,createdAt}) {
+export default function OrderItem({_id,status,totalPrice,createdAt,products}) {
 
         const [orderItem,setOrderItem] = useState(false)
         
@@ -8,7 +9,25 @@ export default function OrderItem({_id,status,totalPrice,createdAt}) {
         <div>
             <h6 onClick = {()=>setOrderItem(!orderItem)}>Order Id : {_id}</h6>
             {orderItem && 
-                <table>
+            <>
+              <table>
+                <thead>
+                  <th>Product title:</th>
+                  <th>Product quantity:</th>
+                </thead>
+                <tbody>
+                  {products.map((item, index) => {
+                    return (
+                        <tr>
+                          <td><Link to={`/${item.product._id}`}>{item.product.title}</Link></td>
+                          <td>{item.amount}</td>
+                        </tr>                
+                    )
+                  })}
+                </tbody>
+              </table>
+
+              <table>
                 <tbody>
                     <tr>
                         <th>status</th>
@@ -23,7 +42,8 @@ export default function OrderItem({_id,status,totalPrice,createdAt}) {
                         <th>{createdAt.toString().split('T')[0]}</th>
                     </tr>
                 </tbody>
-            </table>
+              </table>
+            </>
             }
         </div>
     )
