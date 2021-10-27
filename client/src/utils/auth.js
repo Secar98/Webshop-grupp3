@@ -1,28 +1,22 @@
 import FetchKit from "./fetchKit"
-import jwt_decode from "jwt-decode"
 
 
 
 class Auth {
-    authenticateToken = async (token) =>{
-
-        try{
-
+    authenticateToken = async (token) => {
+        try {
             const validateToken = await FetchKit.validateJWTFetch(token)
-            if(validateToken.ok) {
-                return true
+            if (validateToken.ok) {
+                return [true]
             }
             else {
-                return false
+                throw new Error('Failed to authenticate token')
             }
+        } catch (err) {
+            return [false, err];
         }
-        
-        catch{
-            return false
-        }
-
     }
-    
+
 }
 
-export default new Auth
+export default new Auth()

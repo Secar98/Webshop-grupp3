@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import FetchKit from "../utils/fetchKit";
-import { UserContext } from "../context/userContext";
-import Form from "react-bootstrap/Form";
-import Col from "react-bootstrap/Col";
+import {Col, Form} from "react-bootstrap";
 import Navigation from "../components/Navigation";
 import Auth from "../utils/auth"
 
 export default function LoginPage() {
+  const token = localStorage.getItem('token')
   const history = useHistory();
   const [formData, setFormData] = useState({
     email: "",
@@ -15,11 +14,15 @@ export default function LoginPage() {
   });
 
   useEffect(() => {
-    /* const token = localStorage.getItem("token");
-    if (token && token !== "undefined") {
-      history.push("/");
-    } */
-  }, [history]);
+    authToken(token);
+  }, [token]);
+
+  const authToken = async (token) => {
+    const res = await Auth.authenticateToken(token)
+    if(res[0]) {
+      history.push('/');
+    }
+  }
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
