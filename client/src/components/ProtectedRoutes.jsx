@@ -2,7 +2,7 @@ import React from 'react'
 import {Route, useHistory} from "react-router-dom"
 import Auth from '../utils/auth'
 
-export default function ProtectedRoutes({component: Component, ...rest}) {
+export default function ProtectedRoutes (component) {
     
     const getToken = localStorage.getItem("token")
     const history = useHistory()
@@ -16,12 +16,7 @@ export default function ProtectedRoutes({component: Component, ...rest}) {
     })
     
     return (
-            <Route {...rest} 
-                render={props=>
-                    {   
-                        return <Component {...props}/>
-                    }}  
-            />
+            <Route {...component}/>
     )                               
 
     
