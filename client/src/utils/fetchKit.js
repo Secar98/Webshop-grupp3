@@ -12,6 +12,7 @@ export default class FetchKit{
         
         })
     }
+
     static registerFetch = (formData) => {
         const url = "http://localhost:3000/api/users/signup" 
 
@@ -26,16 +27,17 @@ export default class FetchKit{
         
         })
     }
+
     static FetchUser = (token )=>{
         const url = 'http://localhost:3000/api/users/'
         return fetch(url,{
-              method: "GET",
-              headers:{
-                  "Content-Type":"application/json",
-                  "Authorization": token
-              }
-          })
-        }
+            method: "GET",
+            headers:{
+                "Content-Type":"application/json",
+                "Authorization": token
+            }
+        })
+    }
 
     static editFetch = (formData,token,id) => {
 
@@ -52,7 +54,7 @@ export default class FetchKit{
         })
     }
 
-        static FetchOrders = (token) => {
+    static FetchOrders = (token) => {
 
         const url = 'http://localhost:3000/api/orders'
 
@@ -63,5 +65,16 @@ export default class FetchKit{
                     "Authorization": token
                 }
               })
-    }   
+    }
+
+    static validateJWTFetch = (token) => {
+        const url = 'http://localhost:3000/api/users/jwt-valid'
+        return fetch(url,{                
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": token
+            }
+        })
+    }
 }

@@ -54,6 +54,7 @@ export default function UserProfilePage() {
         setShowEdit(true)
         setShowOrders (false)
     }
+    
     return (
       <>
         <Navigation />

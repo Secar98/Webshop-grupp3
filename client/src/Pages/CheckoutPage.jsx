@@ -6,7 +6,6 @@ import {useHistory} from "react-router-dom"
 const CheckoutPage = () => {
   const history = useHistory()
   const [productsData, setProductsData] = useState(null);
-  //const [sum, setSum] = useState(0);
 
   const fetchData = () => {
     const items = countCart();
@@ -80,33 +79,38 @@ const CheckoutPage = () => {
   return (
     <Container>
       <Navigation />
-      <h1 class="mt-5">Du är på checkoutPage</h1>
+      <div className="colorBackground lightText shadow p-4 m-5">
+        <h1>Checkout</h1>
 
-      {productsData &&
-        productsData.map((item, index) => {
-          const amount = Object.entries(cartArray).find((amount) => item._id === amount[0]);
-          const sum = amount[1] * item.price;
-          totalSum += sum;
-          
-          return (
-            <>
-              <ListGroup class="p-2 bg-light border mt-5" as="ol" numbered>
-                <ListGroup.Item as="li">
-                  <p>Title: {item.title}</p>
-                  <p>Price: {item.price}</p>
-                  <p>Amount: {amount[1]}</p>
-                  <b class="bald">sum: {sum}</b>
-                </ListGroup.Item>
-              </ListGroup>
-            </>
-          );
-        })}
+        <div className="row">
+          <h5 className="col-7">Title</h5>
+          <h5 className="col-2">Amount</h5>
+          <h5 className="col-2">Price</h5>
+          <h5 className="col-1">Sum</h5>
+        </div>
+        {productsData &&
+          productsData.map((item, index) => {
+            const amount = Object.entries(cartArray).find((amount) => item._id === amount[0]);
+            const sum = amount[1] * item.price;
+            totalSum += sum;
 
-      <ListGroup class="p-2 bg-light border mt-5" as="ol" numbered>
-        <ListGroup.Item as="li">Total: {totalSum}</ListGroup.Item>
-        <Button onClick={placeOrderOnClick}>place order</Button>
-      </ListGroup>
-      
+            return (
+              <>
+                <div className="row checkoutItem p-2 mt-2">
+                  <span className="col-7">{item.title}</span>
+                  <span className="col-2">{amount[1]}</span>
+                  <span className="col-2">{item.price} SEK</span>
+                  <span className="col-1">{sum} SEK</span>
+                </div>
+              </>
+            );
+          })}
+
+        <div className="d-flex flex-column align-items-end">
+          <h5 className="p-2 m-2">Total: {totalSum}</h5>
+          <Button onClick={placeOrderOnClick}>Place order</Button>
+        </div>
+      </div>
     </Container>
 
   );
