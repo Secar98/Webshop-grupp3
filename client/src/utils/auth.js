@@ -9,9 +9,12 @@ class Auth {
         try{
 
             const validateToken = await FetchKit.validateJWTFetch(token)
-            if(validateToken.ok) return true
-            else return false
-            
+            if(validateToken.ok) {
+                return true
+            }
+            else {
+                return false
+            }
         }
         
         catch{
@@ -21,18 +24,5 @@ class Auth {
     }
     
 }
-
-/* const validateJWT = async () =>{
-    const token = localStorage.getItem("token")
-    const newToken = await FetchKit.validateJWTFetch(token)
-    console.log(newToken)
-    if(newToken){
-        localStorage.setItem("token", newToken)
-        return true
-    } 
-    else {
-        return false
-    }
-} */
 
 export default new Auth
