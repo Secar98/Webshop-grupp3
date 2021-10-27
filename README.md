@@ -1,5 +1,7 @@
 # Projekt 2 - Webshop - Backend 3
 
+## Ett MERN project
+
 | Deltagare Grupp3  |
 | ----------------- |
 | Amanda Heideman   |
