@@ -118,4 +118,13 @@ li{
   flex-direction: column;
 }
 
+/*
+* CHECKOUT PAGE
+*/
+
+.checkoutItem{
+  background: #F6F6F6;
+  color: #14213D;
+}
+
 
