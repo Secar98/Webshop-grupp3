@@ -28,13 +28,9 @@ body {
 .navbar .navbar-nav .nav-link:hover {
 	color: #fca311;
 }
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	font-family: "Lobster", cursive;
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Lobster', cursive;
 }
 
 .lightText {
@@ -66,6 +62,12 @@ a:hover {
 .flex {
 	display: flex;
 	justify-content: space-between;
+}
+
+.center{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 /*
@@ -142,6 +144,33 @@ td a {
 
 td a:hover {
   color: #fca311;
+}
+
+/*
+* USER PROFILE
+*/
+
+.profilePic{
+  background-color: #F6F6F6;
+  color: #14213D;
+  height: 180px;
+  width: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profileItems{
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+}
+
+th{
+  padding: 5px;
+}
+
+.editBtn{
+  width: 100px;
 }
 
 /*

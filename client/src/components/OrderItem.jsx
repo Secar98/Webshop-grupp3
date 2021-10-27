@@ -1,13 +1,14 @@
 import React,{ useState } from 'react';
 import {Link} from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
 
 export default function OrderItem({_id,status,totalPrice,createdAt,products}) {
 
         const [orderItem,setOrderItem] = useState(false)
         
     return (
-        <div>
-            <h6 onClick = {()=>setOrderItem(!orderItem)}>Order Id : {_id}</h6>
+        <div className="m-2">
+            <Button onClick = {()=>setOrderItem(!orderItem)}>Order Id : {_id}</Button>
             {orderItem && 
             <>
               <table>
@@ -30,11 +31,11 @@ export default function OrderItem({_id,status,totalPrice,createdAt,products}) {
               <table>
                 <tbody>
                     <tr>
-                        <th>status</th>
+                        <th>Status:</th>
                         <th>{status}</th>
                     </tr>
                     <tr>
-                        <th>Total Price</th>
+                        <th>Total Price:</th>
                         <th>{totalPrice} SEK</th>
                     </tr>
                     <tr>
