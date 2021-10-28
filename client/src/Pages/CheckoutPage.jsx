@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Button, Container, ListGroup } from "react-bootstrap";
 import Navigation from "../components/Navigation";
-import {useHistory} from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import FetchKit from "../utils/fetchKit";
 
 const CheckoutPage = () => {
@@ -22,67 +22,67 @@ const CheckoutPage = () => {
   const fetchProductData = async () => {
     const ids = cart.map(item => item.id)
 
-    const fetchedData = await FetchKit.fetchCheckoutPage({products: ids})
+    const fetchedData = await FetchKit.fetchCheckoutPage({ products: ids })
     await fetchedData.json()
-    .then(data => !productsData && setProductsData(data))
+      .then(data => !productsData && setProductsData(data))
   };
 
-  const setCartToLocalstorage = (cart) =>{
+  const setCartToLocalstorage = (cart) => {
     localStorage.setItem("cart", JSON.stringify(cart))
   }
 
-  const calculateTotal = () =>{
+  const calculateTotal = () => {
     let sum = 0;
 
-    if(productsData){
+    if (productsData) {
       productsData.map(item => {
         const { amount } = cart.find(cartItem => cartItem.id === item._id)
         sum += amount * item.price
       })
       setTotalSum(sum)
 
-      if(productsData.length < 1) {
+      if (productsData.length < 1) {
         setTotalSum(0)
       }
-    } 
-    
+    }
+
   }
 
-  const handleOnChange = (e) =>{
+  const handleOnChange = (e) => {
     const id = e.target.id
-      cart.map((item, index )=>{
-        if(item.id === id){
-          const newArr = [...cart]
-          newArr[index] = {id: id, amount: e.target.value}
-          setCart(newArr)
-        }
-      })
+    cart.map((item, index) => {
+      if (item.id === id) {
+        const newArr = [...cart]
+        newArr[index] = { id: id, amount: Number(e.target.value) }
+        setCart(newArr)
+      }
+    })
   }
 
   const removeProduct = (e) => {
     const id = e.target.id
     const updatedCart = cart.filter(item => item.id !== id)
     const updatedProductsData = productsData.filter(item => item._id !== id)
-    
+
     setProductsData(updatedProductsData)
-    setCart(updatedCart)    
+    setCart(updatedCart)
   }
 
-  const disableInput = (e) =>{
+  const disableInput = (e) => {
     e.preventDefault()
     return false
   }
 
-  const placeOrder = async () =>{
-    const order = await FetchKit.placeOrderFetch({products: cart})
-    
-    if(order.ok){
+  const placeOrder = async () => {
+    const order = await FetchKit.placeOrderFetch({ products: cart })
+
+    if (order.ok) {
       localStorage.setItem("cart", JSON.stringify([]))
       //push to order comfirmation
       history.push("/")
     }
   }
-  
+
   return (
     <Container>
       <Navigation />
@@ -105,7 +105,7 @@ const CheckoutPage = () => {
               <>
                 <div className="row checkoutItem p-2 mt-2">
                   <span className="col-7">{item.title}</span>
-                  <input min="1" onKeyDown={disableInput} onChange={handleOnChange} className="col-2" type={"number"} id={item._id} defaultValue={amount}/>
+                  <input min="1" onKeyDown={disableInput} onChange={handleOnChange} className="col-2" type={"number"} id={item._id} defaultValue={amount} />
                   <span className="col-2">{item.price} SEK</span>
                   <span className="col-1">{sum} SEK</span>
                   <Button className="mt-3 col-1" onClick={removeProduct} id={item._id}>remove</Button>
@@ -116,7 +116,7 @@ const CheckoutPage = () => {
 
         <div className="d-flex flex-column align-items-end">
           <h5 className="p-2 m-2">Total: {totalSum}</h5>
-          
+
 
           {cart.length > 0 && <Button onClick={placeOrder}>Place order</Button>}
         </div>
