@@ -62,8 +62,8 @@ export default function AllProductsPage() {
     const checkIfCart = cart.find(item => item.id === id);
     if(!checkIfCart) {
       setCart(prevCart => [...prevCart, {id: id, amount: 1}]);
-
-    } else {
+    } 
+    else {
       cart.map((item, index )=>{
         if(item.id === id){
           const newArr = [...cart]
@@ -77,7 +77,6 @@ export default function AllProductsPage() {
   const setCartToLocalstorage = (cart) =>{
     localStorage.setItem("cart", JSON.stringify(cart))
   }
-
 
   return (
     <div>

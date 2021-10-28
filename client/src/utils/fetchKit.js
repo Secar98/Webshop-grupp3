@@ -87,4 +87,15 @@ export default class FetchKit {
             body: JSON.stringify(body),
         })
     }
+
+    static placeOrderFetch = (body) => {
+        return fetch("http://localhost:3000/api/orders", {
+                method: "POST",
+                headers: {
+                  "Content-type": "application/json",
+                  "authorization": localStorage.getItem("token")
+                },
+                body: JSON.stringify(body),
+              })
+    }
 }
