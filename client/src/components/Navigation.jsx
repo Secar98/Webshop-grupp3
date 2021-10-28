@@ -28,7 +28,7 @@ export default function Navigation() {
               <>
                 <Nav.Link onClick={logOut}>Log out</Nav.Link>
                 <Nav.Link as={Link} to="/user">User</Nav.Link>
-                <Nav.Link as={Link} to="/checkout">Cart</Nav.Link>
+                <Nav.Link as={Link} to="/checkout">🛒</Nav.Link>
               </>
             }
           </Nav>

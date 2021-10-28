@@ -86,11 +86,11 @@ const CheckoutPage = () => {
     <Container>
       <Navigation />
       <div className="colorBackground lightText shadow p-4 m-5">
-        {(orderPlaced === true) ?
+        {orderPlaced === true ?
           <div className="p-2">
             <h3 className="">Thank you for your order!</h3>
             <p>To see your order, go to My orders in your profile page</p>
-            <Button><Link to="/">Back to front page</Link></Button>
+            <Link className="btn" to="/">Back to front page</Link>
           </div>
           :
           <>
