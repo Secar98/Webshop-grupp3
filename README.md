@@ -1,6 +1,6 @@
 # Projekt 2 - Webshop - Backend 3
 
-## MERN projeKt - 2021-10-27
+## MERN projekt - 2021-10-27
 
 \
 ![drawing](pic/mern-stack.jpg)
