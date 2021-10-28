@@ -34,14 +34,13 @@ function App() {
   }
 
   const getUser = async () => {
-    const token = localStorage.getItem("token")
-    if (token) {
+    if (isLoggedin) {
+      const token = localStorage.getItem("token")
       FetchKit.FetchUser(token)
         .then(res => res.json())
         .then(data => {
           setUser(data)
         })
-        .then(() => console.log(user))
     }
   }
 
