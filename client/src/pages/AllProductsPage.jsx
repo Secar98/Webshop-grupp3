@@ -3,19 +3,33 @@ import ProductListItem from '../components/ProductListItem';
 import FetchKit from '../utils/fetchKit'
 import Navigation from "../components/Navigation";
 import { UserContext } from '../context/userContext';
+import jwt_decode from "jwt-decode";
 
 
 export default function AllProductsPage() {
   const [productsData, setProductsData] = useState(null);
   const [filteredData, setFilteredData] = useState(null);
   const [searchField, setSearchField] = useState("");
-  const [cart, setCart] = useState([]);
 
   const { isLoggedin } = useContext(UserContext)
 
+  if (isLoggedin) {
+
+  }
+  const oldCart = () => {
+    if (isLoggedin) {
+      const token = jwt_decode(localStorage.getItem('token'))
+      const decodedToken = JSON.parse(localStorage.getItem(`cart ${token.data}`))
+      return decodedToken === null ? false : decodedToken;
+    }
+  }
+
+  const [cart, setCart] = useState(oldCart() || []);
+
   const setCartToLocalstorage = (cart) => {
     if (isLoggedin) {
-      localStorage.setItem("cart", JSON.stringify(cart))
+      const token = jwt_decode(localStorage.getItem('token'));
+      localStorage.setItem(`cart ${token.data}`, JSON.stringify(cart))
     }
   }
 

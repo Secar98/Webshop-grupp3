@@ -3,10 +3,11 @@ import { Button, Container, ListGroup } from "react-bootstrap";
 import Navigation from "../components/Navigation";
 import { useHistory } from "react-router-dom"
 import FetchKit from "../utils/fetchKit";
+import jwt_decode from "jwt-decode"
 
 const CheckoutPage = () => {
-  const oldCart = JSON.parse(localStorage.getItem("cart"));
-
+  const token = jwt_decode(localStorage.getItem('token'))
+  const oldCart = JSON.parse(localStorage.getItem(`cart ${token.data}`));
   const [cart, setCart] = useState(oldCart || []);
   const [productsData, setProductsData] = useState(null);
   const [totalSum, setTotalSum] = useState(0);
@@ -21,14 +22,13 @@ const CheckoutPage = () => {
 
   const fetchProductData = async () => {
     const ids = cart.map(item => item.id)
-
     const fetchedData = await FetchKit.fetchCheckoutPage({ products: ids })
-    await fetchedData.json()
-      .then(data => !productsData && setProductsData(data))
+    const res = await fetchedData.json()
+    !productsData && setProductsData(res);
   };
 
   const setCartToLocalstorage = (cart) => {
-    localStorage.setItem("cart", JSON.stringify(cart))
+    localStorage.setItem(`cart ${token.data}`, JSON.stringify(cart))
   }
 
   const calculateTotal = () => {
@@ -45,7 +45,6 @@ const CheckoutPage = () => {
         setTotalSum(0)
       }
     }
-
   }
 
   const handleOnChange = (e) => {
@@ -77,7 +76,7 @@ const CheckoutPage = () => {
     const order = await FetchKit.placeOrderFetch({ products: cart })
 
     if (order.ok) {
-      localStorage.setItem("cart", JSON.stringify([]))
+      localStorage.setItem(`cart ${token.data}`, JSON.stringify([]))
       //push to order comfirmation
       history.push("/")
     }
@@ -97,7 +96,7 @@ const CheckoutPage = () => {
         </div>
         {productsData &&
           productsData.map((item) => {
-            const cart = JSON.parse(localStorage.getItem('cart'));
+            const cart = JSON.parse(localStorage.getItem(`cart ${token.data}`));
             const { amount } = cart.find(cartItem => cartItem.id === item._id)
             const sum = amount * item.price;
 

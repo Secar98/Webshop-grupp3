@@ -29,7 +29,6 @@ function App() {
     } else {
       setIsLoggedin(false)
       localStorage.removeItem('token')
-      localStorage.removeItem('cart')
     }
   }
 
