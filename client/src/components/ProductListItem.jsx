@@ -1,10 +1,13 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import { UserContext } from "../context/userContext";
 
 export default function ProductListItem(props) {
   const { pictures, title, price, _id } = props.product;
+
+  const { isLoggedin } = useContext(UserContext)
 
   const onClickHandler = (e) => {
     const id = e.target.value;
@@ -24,9 +27,9 @@ export default function ProductListItem(props) {
                 Go somewhere
               </Link>
             </Button>
-            <Button onClick={onClickHandler} value={_id}>
+            {isLoggedin && <Button onClick={onClickHandler} value={_id} >
               Add Product
-            </Button>
+            </Button>}
           </div>
         </Card.Body>
       </Card>
