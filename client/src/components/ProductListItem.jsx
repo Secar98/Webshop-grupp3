@@ -17,15 +17,15 @@ export default function ProductListItem(props) {
         <Card.Img className="p-3" variant="top" src={pictures.picture1} />
         <Card.Body>
           <Card.Title>{title}</Card.Title>
+          <Card.Text>{price} SEK</Card.Text>
           <div className="flex">
-            <Card.Text>{price} SEK</Card.Text>
             <Button>
               <Link to={`/${_id}`} className="lightText">
-                Go somewhere
+                Show details
               </Link>
             </Button>
             <Button onClick={onClickHandler} value={_id}>
-              Add Product
+              Add to cart
             </Button>
           </div>
         </Card.Body>
