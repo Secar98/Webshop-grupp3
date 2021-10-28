@@ -6,75 +6,79 @@ import FetchKit from "../utils/fetchKit";
 
 const CheckoutPage = () => {
   const oldCart = JSON.parse(localStorage.getItem("cart"));
-  const [cart, setCart] = useState(oldCart || []);
 
-  const history = useHistory()
+  const [cart, setCart] = useState(oldCart || []);
   const [productsData, setProductsData] = useState(null);
   const [totalSum, setTotalSum] = useState(0);
-  // const inputRef = useRef()
-  // let totalSum = 0;
+  const history = useHistory()
 
-
-  const fetchData = async () => {
-    const cart = JSON.parse(localStorage.getItem('cart'));
-    const ids = cart.map(item => item.id)
-
-    FetchKit.fetchCheckoutPage({products: ids})
-    .then(res => res.json())
-    .then(data => {
-      if(!productsData){
-        setProductsData(data)
-      }
-    })
-  };
 
   useEffect(() => {
     setCartToLocalstorage(cart);
-    fetchData();
+    fetchProductData();
     calculateTotal()
   }, [productsData, cart]);
+
+  const fetchProductData = async () => {
+    const ids = cart.map(item => item.id)
+
+    const fetchedData = await FetchKit.fetchCheckoutPage({products: ids})
+    await fetchedData.json()
+    .then(data => !productsData && setProductsData(data))
+  };
 
   const setCartToLocalstorage = (cart) =>{
     localStorage.setItem("cart", JSON.stringify(cart))
   }
+
   const calculateTotal = () =>{
-    const cart = JSON.parse(localStorage.getItem('cart'));
     let sum = 0;
+
     if(productsData){
       productsData.map(item => {
         const { amount } = cart.find(cartItem => cartItem.id === item._id)
         sum += amount * item.price
-        setTotalSum(sum)
       })
-    }
+      setTotalSum(sum)
+
+      if(productsData.length < 1) {
+        setTotalSum(0)
+      }
+    } 
+    
   }
 
-  console.log(totalSum);
-
   const handleOnChange = (e) =>{
-    const cart = JSON.parse(localStorage.getItem('cart'));
     const id = e.target.id
       cart.map((item, index )=>{
         if(item.id === id){
           const newArr = [...cart]
-          if(newArr[index].amount === 0) {
-            newArr
-          } else {
-            newArr[index] = {id: id, amount: e.target.value > 0 ? Number(e.target.value) : 0}
-            setCart(newArr)
-          }
+          newArr[index] = {id: id, amount: e.target.value}
+          setCart(newArr)
         }
       })
   }
 
-  const placeOrder = async () =>{
-    const orderBody = {
-      products: cart
-    }
-    const order = await FetchKit.placeOrderFetch(orderBody)
+  const removeProduct = (e) => {
+    const id = e.target.id
+    const updatedCart = cart.filter(item => item.id !== id)
+    const updatedProductsData = productsData.filter(item => item._id !== id)
     
-    if(order){
+    setProductsData(updatedProductsData)
+    setCart(updatedCart)    
+  }
+
+  const disableInput = (e) =>{
+    e.preventDefault()
+    return false
+  }
+
+  const placeOrder = async () =>{
+    const order = await FetchKit.placeOrderFetch({products: cart})
+    
+    if(order.ok){
       localStorage.setItem("cart", JSON.stringify([]))
+      //push to order comfirmation
       history.push("/")
     }
   }
@@ -101,9 +105,10 @@ const CheckoutPage = () => {
               <>
                 <div className="row checkoutItem p-2 mt-2">
                   <span className="col-7">{item.title}</span>
-                  <input min="0" onChange={handleOnChange}className="col-2" type={"number"} id={item._id} defaultValue={amount}/>
+                  <input min="1" onKeyDown={disableInput} onChange={handleOnChange} className="col-2" type={"number"} id={item._id} defaultValue={amount}/>
                   <span className="col-2">{item.price} SEK</span>
                   <span className="col-1">{sum} SEK</span>
+                  <Button className="mt-3 col-1" onClick={removeProduct} id={item._id}>remove</Button>
                 </div>
               </>
             );
@@ -112,7 +117,8 @@ const CheckoutPage = () => {
         <div className="d-flex flex-column align-items-end">
           <h5 className="p-2 m-2">Total: {totalSum}</h5>
           
-          <Button onClick={placeOrder}>Place order</Button>
+
+          {cart.length > 0 && <Button onClick={placeOrder}>Place order</Button>}
         </div>
       </div>
     </Container>

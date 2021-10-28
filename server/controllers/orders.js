@@ -27,36 +27,39 @@ const addOrder = async (req, res) => {
     const { products } = req.body
     const user = req.user
 
-    const futureProduct = products.map((x) => {
-        return {
-            "amount": x.amount,
-            "product": x.id,
-        }
-    })
-
-    const newProduct = []
-    products.map(item => newProduct.push(item.id))
-    const userData = await User.findById(user)
-
-    const productsData = await Products.find({ '_id': { $in: newProduct } })
-    const shipping = 50;
-    let total = shipping;
-    products.map(item => {
-        const current = productsData.find(product => item.id == product._id)
-        total += current.price * item.amount
-    })
-    const { deliveryAddress } = userData
-    const status = "not send";
-
-    let newObj = { products: futureProduct, shipping, totalPrice: total, deliveryAddress, status, user }
-    const newOrder = await new Orders(newObj);
-    newOrder.save()
-        .then((order) => {
-
-            res.status(201).json(order);
-        }).catch((err) => {
-            res.status(400).json({ msg: err.message });
-        });
+    if(products.length > 0){
+        const futureProduct = products.map((x) => {
+            return {
+                "amount": x.amount,
+                "product": x.id,
+            }
+        })
+    
+        const newProduct = []
+        products.map(item => newProduct.push(item.id))
+        const userData = await User.findById(user)
+    
+        const productsData = await Products.find({ '_id': { $in: newProduct } })
+        const shipping = 50;
+        let total = shipping;
+        products.map(item => {
+            const current = productsData.find(product => item.id == product._id)
+            total += current.price * item.amount
+        })
+        const { deliveryAddress } = userData
+        const status = "not send";
+    
+        let newObj = { products: futureProduct, shipping, totalPrice: total, deliveryAddress, status, user }
+        const newOrder = await new Orders(newObj);
+        newOrder.save()
+            .then((order) => {
+    
+                res.status(201).json(order);
+            }).catch((err) => {
+                res.status(400).json({ msg: err.message });
+            });
+    }
+    else res.sendStatus(404)
 }
 
 
