@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import FetchKit from "../utils/fetchKit";
 import { Form, Col } from "react-bootstrap";
 import Navigation from "../components/Navigation";
+import { UserContext } from "../context/userContext";
 
 export default function RegisterPage() {
   const history = useHistory();
 
-  const handleOnSubmit = (e) => {
+  const { setIsLoggedin } = useContext(UserContext);
+
+  const handleOnSubmit = async (e) => {
     e.preventDefault();
 
     const formData = {
@@ -22,14 +25,13 @@ export default function RegisterPage() {
       },
     };
 
-    FetchKit.registerFetch(formData)
-      .then((res) => res.json())
-      .then((item) => {
-        if (item) {
-          localStorage.setItem("token", item.token);
-          history.push("/");
-        }
-      });
+    const res = await FetchKit.registerFetch(formData)
+    const data = await res.json();
+    if (res.ok) {
+      setIsLoggedin(true);
+      localStorage.setItem("token", data.token);
+      history.push("/");
+    }
   };
 
   return (

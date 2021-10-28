@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import FetchKit from "../utils/fetchKit";
 import {Col, Form} from "react-bootstrap";
 import Navigation from "../components/Navigation";
 import Auth from "../utils/auth"
+import { UserContext } from "../context/userContext";
 
 export default function LoginPage() {
   const token = localStorage.getItem('token')
@@ -12,6 +13,8 @@ export default function LoginPage() {
     email: "",
     password: "",
   });
+
+  const {setIsLoggedin} = useContext(UserContext);
 
   useEffect(() => {
     authToken(token);
@@ -26,13 +29,13 @@ export default function LoginPage() {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-
-    FetchKit.loginFetch(formData)
-    .then(res => res.json())
-    .then(item =>{
-      localStorage.setItem("token", item.token);
+    const res = await FetchKit.loginFetch(formData)
+    const data = await res.json();
+    if (res.ok) {
+      setIsLoggedin(true);
+      localStorage.setItem("token", data.token);
       history.push("/")
-    })
+    }
   };
 
   const handleOnChange = (e) => {

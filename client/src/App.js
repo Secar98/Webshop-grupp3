@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import LoginPage from './Pages/LoginPage';
 import RegisterPage from './Pages/RegisterPage';
@@ -15,22 +15,37 @@ function App() {
   const [validToken, setValidToken] = useState(false)
   const [showEdit, setShowEdit] = useState(false)
   const [showProfile, setShowProfile] = useState(true)
+  const [isLoggedin, setIsLoggedin] = useState(false);
 
-  const getUser = () => {
-    const token = localStorage.getItem("token")
-    if (token) {
+  useEffect(() => {
+    authenticated();
+  }, [isLoggedin])
+
+  const authenticated = async () => {
+    const token = localStorage.getItem('token')
+    const res = await FetchKit.validateJWTFetch(token)
+    if (res.ok) {
+      setIsLoggedin(true)
+    } else {
+      setIsLoggedin(false)
+      localStorage.removeItem('token')
+    }
+  }
+
+  const getUser = async () => {
+    if (isLoggedin) {
+      const token = localStorage.getItem("token")
       FetchKit.FetchUser(token)
         .then(res => res.json())
         .then(data => {
           setUser(data)
         })
-        .then(() => console.log(user))
     }
   }
 
   return (
     <div className="container">
-      <UserContext.Provider value={{ user, setUser, showEdit, setShowEdit, showProfile, setShowProfile, getUser, validToken, setValidToken }}>
+      <UserContext.Provider value={{ isLoggedin, setIsLoggedin, user, setUser, showEdit, setShowEdit, showProfile, setShowProfile, getUser, validToken, setValidToken }}>
         <Switch>
           <ProtectedRoutes path="/user" component={UserProfilePage} />
           <ProtectedRoutes path="/checkout" component={CheckoutPage} />

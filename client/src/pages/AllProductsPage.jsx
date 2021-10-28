@@ -1,8 +1,9 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import ProductListItem from '../components/ProductListItem';
-import {UserContext} from '../context/userContext';
-import FetchKit from '../utils/fetchKit';
+import FetchKit from '../utils/fetchKit'
 import Navigation from "../components/Navigation";
+import { UserContext } from '../context/userContext';
+import jwt_decode from "jwt-decode";
 
 
 export default function AllProductsPage() {
@@ -10,28 +11,39 @@ export default function AllProductsPage() {
   const [filteredData, setFilteredData] = useState(null);
   const [searchField, setSearchField] = useState("");
 
-  const oldCart = JSON.parse(localStorage.getItem("Cart"));
-  const [cart, setCart] = useState(oldCart || []);
+  const { isLoggedin } = useContext(UserContext)
 
-  localStorage.setItem("OrderPlaced", false);
+  const oldCart = () => {
+    if (isLoggedin) {
+      const token = jwt_decode(localStorage.getItem('token'))
+      const decodedToken = JSON.parse(localStorage.getItem(`cart ${token.data}`))
+      return decodedToken === null ? false : decodedToken;
+    }
+  }
 
-  const fetchData = () => {
-    const url = "http://localhost:3000/api/products/";
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        setProductsData(data);
-        setFilteredData(data);
-      });
-  };
+  const [cart, setCart] = useState(oldCart() || []);
 
-  const setCartLocalStorage = (cart) => {
-    localStorage.setItem("Cart", JSON.stringify(cart));
+  const setCartToLocalstorage = (cart) => {
+    if (isLoggedin) {
+      const token = jwt_decode(localStorage.getItem('token'));
+      localStorage.setItem(`cart ${token.data}`, JSON.stringify(cart))
+    }
+  }
+
+  const fetchData = async () => {
+    const res = await FetchKit.fetchAllProducts();
+    const data = await res.json();
+    if (res.ok) {
+      setProductsData(data)
+      setFilteredData(data);
+    }
   };
 
   useEffect(() => {
-    setCartLocalStorage(cart);
-    fetchData();
+    setCartToLocalstorage(cart);
+    if (!productsData) {
+      fetchData();
+    }
   }, [cart]);
 
   //sorting function, takes category as a parameter, returns products in that category.
@@ -62,7 +74,20 @@ export default function AllProductsPage() {
   };
 
   const onAddHandler = (id) => {
-    setCart((prevArray) => [...prevArray, id]);
+
+    const checkIfCart = cart.find(item => item.id === id);
+    if (!checkIfCart) {
+      setCart(prevCart => [...prevCart, { id: id, amount: 1 }]);
+    }
+    else {
+      cart.map((item, index) => {
+        if (item.id === id) {
+          const newArr = [...cart]
+          newArr[index] = { id: id, amount: ++item.amount }
+          setCart(newArr)
+        }
+      })
+    }
   };
 
   return (
