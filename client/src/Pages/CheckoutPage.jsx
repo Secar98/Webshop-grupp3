@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Button, Container, ListGroup } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Container } from "react-bootstrap";
 import Navigation from "../components/Navigation";
 import { useHistory } from "react-router-dom"
 import FetchKit from "../utils/fetchKit";
