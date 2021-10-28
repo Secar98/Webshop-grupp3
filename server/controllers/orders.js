@@ -25,14 +25,15 @@ const getDetailOrder = async (req, res) => {
 
 const addOrder = async (req, res) => {
     const { products } = req.body
-    const futureProduct = products.map(function (x) {
+    const user = req.user
+
+    const futureProduct = products.map((x) => {
         return {
             "amount": x.amount,
             "product": x.id,
         }
     })
 
-    const user = req.user
     const newProduct = []
     products.map(item => newProduct.push(item.id))
     const userData = await User.findById(user)

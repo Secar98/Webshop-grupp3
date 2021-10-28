@@ -11,7 +11,7 @@ const CheckoutPage = () => {
   const history = useHistory()
   const [productsData, setProductsData] = useState(null);
   const [totalSum, setTotalSum] = useState(0);
-  const inputRef = useRef()
+  // const inputRef = useRef()
   // let totalSum = 0;
 
 
@@ -49,21 +49,26 @@ const CheckoutPage = () => {
     }
   }
 
+  console.log(totalSum);
+
   const handleOnChange = (e) =>{
     const cart = JSON.parse(localStorage.getItem('cart'));
     const id = e.target.id
-    cart.map((item, index )=>{
-      if(item.id === id){
-        const newArr = [...cart]
-        newArr[index] = {id: id, amount: e.target.value}
-        setCart(newArr)
-      }
-    })
+      cart.map((item, index )=>{
+        if(item.id === id){
+          const newArr = [...cart]
+          if(newArr[index].amount === 0) {
+            newArr
+          } else {
+            newArr[index] = {id: id, amount: e.target.value > 0 ? Number(e.target.value) : 0}
+            setCart(newArr)
+          }
+        }
+      })
   }
 
   const placeOrder = async () =>{
     const orderBody = {
-      totalSum: totalSum,
       products: cart
     }
     const order = await FetchKit.placeOrderFetch(orderBody)
@@ -96,7 +101,7 @@ const CheckoutPage = () => {
               <>
                 <div className="row checkoutItem p-2 mt-2">
                   <span className="col-7">{item.title}</span>
-                  <input onChange={handleOnChange}className="col-2" type={"number"} id={item._id} defaultValue={amount}/>
+                  <input min="0" onChange={handleOnChange}className="col-2" type={"number"} id={item._id} defaultValue={amount}/>
                   <span className="col-2">{item.price} SEK</span>
                   <span className="col-1">{sum} SEK</span>
                 </div>
