@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Button, Container, ListGroup } from "react-bootstrap";
 import Navigation from "../components/Navigation";
-import {useHistory} from "react-router-dom"
+import {Link, useHistory} from "react-router-dom"
 
 const CheckoutPage = () => {
   const history = useHistory()
   const [productsData, setProductsData] = useState(null);
+
+  let orderPlaced = localStorage.getItem("OrderPlaced");
 
   const fetchData = () => {
     const items = countCart();
@@ -72,7 +74,8 @@ const CheckoutPage = () => {
     .then(res => res.json())
     .then(data =>{
       localStorage.setItem("Cart", JSON.stringify([]))
-      history.push("/")
+      localStorage.setItem("OrderPlaced", true);
+      window.location.reload();
     })
   }
 
@@ -80,6 +83,14 @@ const CheckoutPage = () => {
     <Container>
       <Navigation />
       <div className="colorBackground lightText shadow p-4 m-5">
+      {(orderPlaced=="true") ?
+      <div className="p-2">
+        <h3 className="">Thank you for your order!</h3>
+        <p>To see your order, go to My orders in your profile page</p>
+        <Button><Link to="/">Back to front page</Link></Button>
+      </div>
+      :
+      <>
         <h1>Checkout</h1>
 
         <div className="row">
@@ -110,6 +121,9 @@ const CheckoutPage = () => {
           <h5 className="p-2 m-2">Total: {totalSum}</h5>
           <Button onClick={placeOrderOnClick}>Place order</Button>
         </div>
+        </>
+        
+      }
       </div>
     </Container>
 

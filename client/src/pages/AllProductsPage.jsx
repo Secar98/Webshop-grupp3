@@ -13,6 +13,7 @@ export default function AllProductsPage() {
   const oldCart = JSON.parse(localStorage.getItem("Cart"));
   const [cart, setCart] = useState(oldCart || []);
 
+  localStorage.setItem("OrderPlaced", false);
 
   const fetchData = () => {
     const url = "http://localhost:3000/api/products/";
