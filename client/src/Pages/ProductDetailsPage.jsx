@@ -1,16 +1,34 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import Image from 'react-bootstrap/Image';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Navigation from '../components/Navigation';
+import { UserContext } from '../context/userContext';
+import jwt_decode from "jwt-decode";
 
 export default function ProductDetailsPage(props) {
   const [productData, setProductData] = useState(null);
   const [pictureData, setPictureData] = useState(null);
   const [largePic, setLargePic] = useState(null);
 
-  const oldCart = JSON.parse(localStorage.getItem("Cart"));
-  const [cart, setCart] = useState(oldCart || []);
+  const { isLoggedin } = useContext(UserContext)
+
+  const oldCart = () => {
+    if (isLoggedin) {
+      const token = jwt_decode(localStorage.getItem('token'))
+      const decodedToken = JSON.parse(localStorage.getItem(`cart ${token.data}`))
+      return decodedToken === null ? false : decodedToken;
+    }
+  }
+
+  const [cart, setCart] = useState(oldCart() || []);
+
+  const setCartToLocalstorage = (cart) => {
+    if (isLoggedin) {
+      const token = jwt_decode(localStorage.getItem('token'));
+      localStorage.setItem(`cart ${token.data}`, JSON.stringify(cart))
+    }
+  }
 
   let pictures;
   const baseUrl = (window.location).href;
@@ -30,12 +48,9 @@ export default function ProductDetailsPage(props) {
       .catch((err) => console.log(err.message));
   }
 
-  const setCartLocalStorage = (cart) => {
-    localStorage.setItem("Cart", JSON.stringify(cart));
-  };
 
   useEffect(() => {
-    setCartLocalStorage(cart);
+    setCartToLocalstorage(cart);
     fetchData();
   }, [cart]);
 
@@ -58,7 +73,19 @@ export default function ProductDetailsPage(props) {
   }
 
   function onAdd(){
-    setCart((prevArray) => [...prevArray, id]);
+    const checkIfCart = cart.find(item => item.id === id);
+    if (!checkIfCart) {
+      setCart(prevCart => [...prevCart, { id: id, amount: 1 }]);
+    }
+    else {
+      cart.map((item, index) => {
+        if (item.id === id) {
+          const newArr = [...cart]
+          newArr[index] = { id: id, amount: ++item.amount }
+          setCart(newArr)
+        }
+      })
+    }
   };
 
   return (
