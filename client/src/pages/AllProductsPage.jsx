@@ -1,33 +1,38 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import ProductListItem from '../components/ProductListItem';
-import {UserContext} from '../context/userContext';
-import FetchKit from '../utils/fetchKit';
+import FetchKit from '../utils/fetchKit'
 import Navigation from "../components/Navigation";
+import { UserContext } from '../context/userContext';
 
 
 export default function AllProductsPage() {
   const [productsData, setProductsData] = useState(null);
   const [filteredData, setFilteredData] = useState(null);
   const [searchField, setSearchField] = useState("");
+  const [cart, setCart] = useState([]);
 
-  const oldCart = JSON.parse(localStorage.getItem("cart"));
-  const [cart, setCart] = useState(oldCart || []);
+  const { isLoggedin } = useContext(UserContext)
 
+  const setCartToLocalstorage = (cart) => {
+    if (isLoggedin) {
+      localStorage.setItem("cart", JSON.stringify(cart))
+    }
+  }
 
-  const fetchData = () => {
-    const url = "http://localhost:3000/api/products/";
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        setProductsData(data);
-        setFilteredData(data);
-      });
+  const fetchData = async () => {
+    const res = await FetchKit.fetchAllProducts();
+    const data = await res.json();
+    if (res.ok) {
+      setProductsData(data)
+      setFilteredData(data);
+    }
   };
 
   useEffect(() => {
-
     setCartToLocalstorage(cart);
-    fetchData();
+    if (!productsData) {
+      fetchData();
+    }
   }, [cart]);
 
   //sorting function, takes category as a parameter, returns products in that category.
@@ -60,23 +65,19 @@ export default function AllProductsPage() {
   const onAddHandler = (id) => {
 
     const checkIfCart = cart.find(item => item.id === id);
-    if(!checkIfCart) {
-      setCart(prevCart => [...prevCart, {id: id, amount: 1}]);
-    } 
+    if (!checkIfCart) {
+      setCart(prevCart => [...prevCart, { id: id, amount: 1 }]);
+    }
     else {
-      cart.map((item, index )=>{
-        if(item.id === id){
+      cart.map((item, index) => {
+        if (item.id === id) {
           const newArr = [...cart]
-          newArr[index] = {id: id, amount: ++item.amount}
+          newArr[index] = { id: id, amount: ++item.amount }
           setCart(newArr)
         }
       })
     }
   };
-
-  const setCartToLocalstorage = (cart) =>{
-    localStorage.setItem("cart", JSON.stringify(cart))
-  }
 
   return (
     <div>
