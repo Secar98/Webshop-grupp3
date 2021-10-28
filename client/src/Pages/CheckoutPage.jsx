@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import Navigation from "../components/Navigation";
-import { useHistory } from "react-router-dom"
+import { useHistory, Link } from "react-router-dom"
 import FetchKit from "../utils/fetchKit";
 import jwt_decode from "jwt-decode"
 
@@ -10,6 +10,7 @@ const CheckoutPage = () => {
   const oldCart = JSON.parse(localStorage.getItem(`cart ${token.data}`));
   const [cart, setCart] = useState(oldCart || []);
   const [productsData, setProductsData] = useState(null);
+  const [orderPlaced, setOrderPlaced] = useState(false);
   const [totalSum, setTotalSum] = useState(0);
   const history = useHistory()
 
@@ -77,8 +78,7 @@ const CheckoutPage = () => {
 
     if (order.ok) {
       localStorage.setItem(`cart ${token.data}`, JSON.stringify([]))
-      //push to order comfirmation
-      history.push("/")
+      setOrderPlaced(true)
     }
   }
 
@@ -86,39 +86,50 @@ const CheckoutPage = () => {
     <Container>
       <Navigation />
       <div className="colorBackground lightText shadow p-4 m-5">
-        <h1>Checkout</h1>
+        {(orderPlaced === true) ?
+          <div className="p-2">
+            <h3 className="">Thank you for your order!</h3>
+            <p>To see your order, go to My orders in your profile page</p>
+            <Button><Link to="/">Back to front page</Link></Button>
+          </div>
+          :
+          <>
+            <h1>Checkout</h1>
 
-        <div className="row">
-          <h5 className="col-7">Title</h5>
-          <h5 className="col-2">Amount</h5>
-          <h5 className="col-2">Price</h5>
-          <h5 className="col-1">Sum</h5>
-        </div>
-        {productsData &&
-          productsData.map((item) => {
-            const cart = JSON.parse(localStorage.getItem(`cart ${token.data}`));
-            const { amount } = cart.find(cartItem => cartItem.id === item._id)
-            const sum = amount * item.price;
+            <div className="row">
+              <h5 className="col-7">Title</h5>
+              <h5 className="col-2">Amount</h5>
+              <h5 className="col-2">Price</h5>
+              <h5 className="col-1">Sum</h5>
+            </div>
+            {productsData &&
+              productsData.map((item) => {
+                const cart = JSON.parse(localStorage.getItem(`cart ${token.data}`));
+                const { amount } = cart.find(cartItem => cartItem.id === item._id)
+                const sum = amount * item.price;
 
-            return (
-              <>
-                <div className="row checkoutItem p-2 mt-2">
-                  <span className="col-7">{item.title}</span>
-                  <input min="1" onKeyDown={disableInput} onChange={handleOnChange} className="col-2" type={"number"} id={item._id} defaultValue={amount} />
-                  <span className="col-2">{item.price} SEK</span>
-                  <span className="col-1">{sum} SEK</span>
-                  <Button className="mt-3 col-1" onClick={removeProduct} id={item._id}>remove</Button>
-                </div>
-              </>
-            );
-          })}
+                return (
+                  <>
+                    <div className="row checkoutItem p-2 mt-2">
+                      <span className="col-7">{item.title}</span>
+                      <input min="1" onKeyDown={disableInput} onChange={handleOnChange} className="col-2" type={"number"} id={item._id} defaultValue={amount} />
+                      <span className="col-2">{item.price} SEK</span>
+                      <span className="col-1">{sum} SEK</span>
+                      <Button className="mt-3 col-1" onClick={removeProduct} id={item._id}>remove</Button>
+                    </div>
+                  </>
+                );
+              })}
 
-        <div className="d-flex flex-column align-items-end">
-          <h5 className="p-2 m-2">Total: {totalSum}</h5>
+            <div className="d-flex flex-column align-items-end">
+              <h5 className="p-2 m-2">Total: {totalSum}</h5>
 
 
-          {cart.length > 0 && <Button onClick={placeOrder}>Place order</Button>}
-        </div>
+              {cart.length > 0 && <Button onClick={placeOrder}>Place order</Button>}
+            </div>
+          </>
+
+        }
       </div>
     </Container>
 

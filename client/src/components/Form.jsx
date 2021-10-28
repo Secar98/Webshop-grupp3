@@ -1,6 +1,7 @@
 import React, {useContext} from 'react'
 import FetchKit from '../utils/fetchKit';
 import {UserContext} from '../context/userContext';
+import Button from 'react-bootstrap/Button';
 
 export default function Form({_id,fullName,email,phoneNumber, deliveryAddress}) {
 
@@ -31,15 +32,51 @@ export default function Form({_id,fullName,email,phoneNumber, deliveryAddress}) 
 
     return (
         <div>
-    <form method="POST" onSubmit={handleOnSubmit}>
-        <input name="fullName" type="text" defaultValue={fullName}/>
-        <input name="email" type="text" defaultValue={email} />
-        <input name="phoneNumber" type="number" defaultValue={phoneNumber} />
-        <input name="postalCode" type="number" defaultValue={deliveryAddress.postalCode}/>
-        <input name="streetAddress" type="text" defaultValue={deliveryAddress.streetAddress} />
-        <input name="city" type="text" defaultValue={deliveryAddress.city}/>
-        <input type="submit" value="submit"/>
-    </form>
-</div>
+            <h2>My Profile</h2>
+            <form method="POST" onSubmit={handleOnSubmit}>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Name</td>
+                            <th>
+                                <input name="fullName" type="text" defaultValue={fullName}/>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <th>
+                                <input name="email" type="text" defaultValue={email} />
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>Phone number</td>
+                            <th>
+                <input name="phoneNumber" type="number" defaultValue={phoneNumber} />
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>Postal code</td>
+                            <th>
+                <input name="postalCode" type="number" defaultValue={deliveryAddress.postalCode}/>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>Street address</td>
+                            <th>
+                <input name="streetAddress" type="text" defaultValue={deliveryAddress.streetAddress} />
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>City</td>
+                            <th>
+                <input name="city" type="text" defaultValue={deliveryAddress.city}/>
+                            </th>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+                <input className="btn lightText m-3" type="submit" value="Submit"/>
+            </form>
+        </div>
     )
 }

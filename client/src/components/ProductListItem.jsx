@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
+import { Card, Button } from "react-bootstrap/";
 import { UserContext } from "../context/userContext";
 
 export default function ProductListItem(props) {
@@ -20,19 +19,21 @@ export default function ProductListItem(props) {
         <Card.Img className="p-3" variant="top" src={pictures.picture1} />
         <Card.Body>
           <Card.Title>{title}</Card.Title>
+          <Card.Text>{price} SEK</Card.Text>
           <div className="flex">
-            <Card.Text>{price} SEK</Card.Text>
             <Button>
               <Link to={`/${_id}`} className="lightText">
-                Go somewhere
+                Show details
               </Link>
             </Button>
-            {isLoggedin && <Button onClick={onClickHandler} value={_id} >
-              Add Product
-            </Button>}
-          </div>
-        </Card.Body>
-      </Card>
+            {
+              isLoggedin && <Button onClick={onClickHandler} value={_id} >
+                Add Product
+              </Button>
+            }
+          </div >
+        </Card.Body >
+      </Card >
     </>
   );
 }

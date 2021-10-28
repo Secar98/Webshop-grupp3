@@ -8,11 +8,15 @@ export default function ProductDetailsPage(props) {
   const [productData, setProductData] = useState(null);
   const [pictureData, setPictureData] = useState(null);
   const [largePic, setLargePic] = useState(null);
+
+  const oldCart = JSON.parse(localStorage.getItem("Cart"));
+  const [cart, setCart] = useState(oldCart || []);
+
   let pictures;
+  const baseUrl = (window.location).href;
+  const id = baseUrl.substring(baseUrl.lastIndexOf('/') + 1);
 
   async function fetchData() {
-    const baseUrl = (window.location).href;
-    const id = baseUrl.substring(baseUrl.lastIndexOf('/') + 1);
     const url = 'http://localhost:3000/api/products/';
     const url2 = url + id;
 
@@ -26,9 +30,16 @@ export default function ProductDetailsPage(props) {
       .catch((err) => console.log(err.message));
   }
 
+  const setCartLocalStorage = (cart) => {
+    localStorage.setItem("Cart", JSON.stringify(cart));
+  };
+
   useEffect(() => {
+    setCartLocalStorage(cart);
     fetchData();
-  }, []);
+  }, [cart]);
+
+  
 
   if(pictureData){
     pictures = [pictureData.picture1, pictureData.picture2, pictureData.picture3];
@@ -45,6 +56,10 @@ export default function ProductDetailsPage(props) {
     e.preventDefault();
     setLargePic(pictures[e.target.id]);
   }
+
+  function onAdd(){
+    setCart((prevArray) => [...prevArray, id]);
+  };
 
   return (
     <>
@@ -73,7 +88,7 @@ export default function ProductDetailsPage(props) {
             <Card.Text>{productData.description}</Card.Text>
             <div className="flex">
               <Card.Text>Price: {productData.price} kr</Card.Text>
-              <Button className="lightText">Add to cart</Button>
+              <Button className="lightText" onClick={onAdd} >Add to cart</Button>
             </div>
           </Card.Body>
           <Card.Footer className="col-12">

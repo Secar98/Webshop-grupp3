@@ -13,9 +13,6 @@ export default function AllProductsPage() {
 
   const { isLoggedin } = useContext(UserContext)
 
-  if (isLoggedin) {
-
-  }
   const oldCart = () => {
     if (isLoggedin) {
       const token = jwt_decode(localStorage.getItem('token'))
