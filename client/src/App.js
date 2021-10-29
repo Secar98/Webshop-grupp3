@@ -23,13 +23,14 @@ function App() {
 
   const authenticated = async () => {
     const token = localStorage.getItem('token')
-    const res = await FetchKit.validateJWTFetch(token)
-    if (res.ok) {
-      setIsLoggedin(true)
-    } else {
-      setIsLoggedin(false)
-      if (localStorage.getItem('token'))
+    if (token) {
+      const res = await FetchKit.validateJWTFetch(token)
+      if (res.ok) {
+        setIsLoggedin(true)
+      } else {
+        setIsLoggedin(false)
         localStorage.removeItem('token')
+      }
     }
   }
 
