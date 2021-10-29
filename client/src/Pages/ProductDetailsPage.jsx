@@ -35,7 +35,7 @@ export default function ProductDetailsPage(props) {
   const id = baseUrl.substring(baseUrl.lastIndexOf('/') + 1);
 
   async function fetchData() {
-    const url = 'http://localhost:3000/api/products/';
+    const url = 'https://my-app-server-webshop-grupp3.herokuapp.com/api/products/';
     const url2 = url + id;
 
     await fetch(url2)
