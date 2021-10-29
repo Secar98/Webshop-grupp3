@@ -28,7 +28,8 @@ function App() {
       setIsLoggedin(true)
     } else {
       setIsLoggedin(false)
-      localStorage.removeItem('token')
+      if (localStorage.getItem('token'))
+        localStorage.removeItem('token')
     }
   }
 
