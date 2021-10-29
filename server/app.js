@@ -6,12 +6,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 
-const usersRouter = require("./routes/users");
-const productsRouter = require("./routes/products");
-const ordersRouter = require("./routes/orders");
-
 const app = express();
-
 app.use(cors());
 
 app.use(logger("dev"));
@@ -28,6 +23,10 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => console.log("Connected to database"))
+
+const usersRouter = require("./routes/users");
+const productsRouter = require("./routes/products");
+const ordersRouter = require("./routes/orders");
 
 app.use("/api/users", usersRouter);
 app.use("/api/products", productsRouter);
