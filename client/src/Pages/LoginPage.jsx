@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import FetchKit from "../utils/fetchKit";
-import {Col, Form} from "react-bootstrap";
+import { Col, Form } from "react-bootstrap";
 import Navigation from "../components/Navigation";
 import Auth from "../utils/auth"
 import { UserContext } from "../context/userContext";
@@ -14,7 +14,7 @@ export default function LoginPage() {
     password: "",
   });
 
-  const {setIsLoggedin} = useContext(UserContext);
+  const { setIsLoggedin } = useContext(UserContext);
 
   useEffect(() => {
     authToken(token);
@@ -22,7 +22,7 @@ export default function LoginPage() {
 
   const authToken = async (token) => {
     const res = await Auth.authenticateToken(token)
-    if(res[0]) {
+    if (res[0]) {
       history.push('/');
     }
   }

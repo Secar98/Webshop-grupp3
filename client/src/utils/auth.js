@@ -1,7 +1,5 @@
 import FetchKit from "./fetchKit"
 
-
-
 class Auth {
     authenticateToken = async (token) => {
         try {

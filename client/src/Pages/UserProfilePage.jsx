@@ -13,7 +13,7 @@ export default function UserProfilePage() {
   const [orders, setOrders] = useState(null)
   const [showOrders, setShowOrders] = useState(false)
 
-  const { user, setUser, showEdit, setShowEdit, showProfile, setShowProfile, getUser } = useContext(UserContext);
+  const { user, showEdit, setShowEdit, showProfile, setShowProfile, getUser } = useContext(UserContext);
 
   useEffect(() => {
     getOrders()
