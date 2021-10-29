@@ -12,7 +12,11 @@ const ordersRouter = require("./routes/orders");
 
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+  origin: 'https://my-app-client-webshop-grupp3.herokuapp.com/',
+  optionsSuccessStatus: 200
+}
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -29,8 +33,8 @@ mongoose
   })
   .then(() => console.log("Connected to database"))
 
-app.use("/api/users", usersRouter);
-app.use("/api/products", productsRouter);
-app.use("/api/orders", ordersRouter);
+app.use("/api/users", cors(corsOptions), usersRouter);
+app.use("/api/products", cors(corsOptions), productsRouter);
+app.use("/api/orders", cors(corsOptions), ordersRouter);
 
 module.exports = app;

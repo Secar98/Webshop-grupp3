@@ -1,6 +1,6 @@
 export default class FetchKit {
     static loginFetch = (formData) => {
-        const url = "http://localhost:3000/api/users/signin"
+        const url = "https://my-app-server-webshop-grupp3.herokuapp.com/api/users/signin"
 
         return fetch(url, {
             method: "POST",
@@ -14,7 +14,7 @@ export default class FetchKit {
     }
 
     static registerFetch = (formData) => {
-        const url = "http://localhost:3000/api/users/signup"
+        const url = "https://my-app-server-webshop-grupp3.herokuapp.com/api/users/signup"
 
         return fetch(url, {
             method: "POST",
@@ -29,7 +29,7 @@ export default class FetchKit {
     }
 
     static FetchUser = (token) => {
-        const url = 'http://localhost:3000/api/users/'
+        const url = 'https://my-app-server-webshop-grupp3.herokuapp.com/api/users/'
         return fetch(url, {
             method: "GET",
             headers: {
@@ -40,7 +40,7 @@ export default class FetchKit {
     }
 
     static editFetch = (formData, token, id) => {
-        const url = `http://localhost:3000/api/users/${id}`
+        const url = `https://my-app-server-webshop-grupp3.herokuapp.com/api/users/${id}`
         return fetch(url, {
             method: "POST",
             headers: {
@@ -53,7 +53,7 @@ export default class FetchKit {
     }
 
     static FetchOrders = (token) => {
-        const url = 'http://localhost:3000/api/orders'
+        const url = 'https://my-app-server-webshop-grupp3.herokuapp.com/api/orders'
         return fetch(url, {
             method: "GET",
             headers: {
@@ -64,7 +64,7 @@ export default class FetchKit {
     }
 
     static validateJWTFetch = (token) => {
-        const url = 'http://localhost:3000/api/users/jwt-valid'
+        const url = 'https://my-app-server-webshop-grupp3.herokuapp.com/api/users/jwt-valid'
         return fetch(url, {
             method: "GET",
             headers: {
@@ -75,7 +75,7 @@ export default class FetchKit {
     }
 
     static fetchCheckoutPage = (body) => {
-        return fetch("http://localhost:3000/api/products/checkout", {
+        return fetch("https://my-app-server-webshop-grupp3.herokuapp.com/api/products/checkout", {
             method: "POST",
             headers: {
                 "Content-type": "application/json",
@@ -85,7 +85,7 @@ export default class FetchKit {
     }
 
     static placeOrderFetch = (body) => {
-        return fetch("http://localhost:3000/api/orders", {
+        return fetch("https://my-app-server-webshop-grupp3.herokuapp.com/api/orders", {
             method: "POST",
             headers: {
                 "Content-type": "application/json",
@@ -96,7 +96,7 @@ export default class FetchKit {
     }
 
     static fetchAllProducts = () => {
-        const url = "http://localhost:3000/api/products/";
+        const url = "https://my-app-server-webshop-grupp3.herokuapp.com/api/products/";
         return fetch(url, {
             method: "GET",
             headers: {
