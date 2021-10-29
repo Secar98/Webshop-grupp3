@@ -29,7 +29,6 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => console.log("Connected to database"))
-  .catch((error) => console.log(error));
 
 app.use("/api/users", usersRouter);
 app.use("/api/products", productsRouter);
