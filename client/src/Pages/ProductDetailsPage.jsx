@@ -114,7 +114,7 @@ export default function ProductDetailsPage(props) {
                 <Card.Text>{productData.description}</Card.Text>
                 <div className="flex">
                   <Card.Text>Price: {productData.price} kr</Card.Text>
-                  <Button className="lightText" onClick={onAdd} >Add to cart</Button>
+                  {isLoggedin && < Button className="lightText" onClick={onAdd} >Add to cart</Button>}
                 </div>
               </Card.Body>
               <Card.Footer className="col-12">
