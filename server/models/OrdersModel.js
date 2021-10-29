@@ -17,7 +17,7 @@ const orderSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Product",
         required: true,
-        
+
       },
       _id: false,
     },
@@ -40,9 +40,9 @@ const orderSchema = new Schema({
     type: String,
     required: true,
   },
-  createdAt:{
-    type:Date,
-    default:new Date
+  createdAt: {
+    type: Date,
+    default: new Date
   }
 });
 

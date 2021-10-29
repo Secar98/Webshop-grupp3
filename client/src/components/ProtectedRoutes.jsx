@@ -1,5 +1,5 @@
-import React,{useState, useEffect} from 'react'
-import {Route, useHistory} from "react-router-dom"
+import React, { useState, useEffect } from 'react'
+import { Route, useHistory } from "react-router-dom"
 import Auth from '../utils/auth'
 
 export default function ProtectedRoutes(component) {
@@ -15,14 +15,14 @@ export default function ProtectedRoutes(component) {
         Auth.authenticateToken(getToken)
             .then(item => {
                 setIsLoading(item[0]);
-                if(!item[0]) {
-                    console.log(item[1])
+                if (!item[0]) {
                     history.push("/")
-                }})
+                }
+            })
     }
-        
+
     return (
-            isLoading ? <Route {...component} /> :  <>Loading...</>
-    )                               
-    
+        isLoading ? <Route {...component} /> : <>Loading...</>
+    )
+
 }

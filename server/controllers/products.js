@@ -20,13 +20,13 @@ const getDetailProduct = async (req, res) => {
 };
 
 const getCheckOutProducts = async (req, res) => {
-  const {products} = req.body;
+  const { products } = req.body;
   try {
     const checkOutProducts = await Products.find({ '_id': { $in: products } });
     res.status(200).json(checkOutProducts);
-   } catch (err) {
+  } catch (err) {
     res.status(404).json({ message: err.message });
-   }
+  }
 }
 
 
